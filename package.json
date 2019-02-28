@@ -1,0 +1,22 @@
+{
+  "name": "label-box",
+  "version": "1.0.0",
+  "description": "Web based fast and simple label box app for object detection.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/ebubekirtabak/label-box.git",
+  "keywords": [
+    "Electron",
+    "label",
+    "box",
+    "object deection",
+    "image clasifier"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^4.0.6"
+  }
+}
