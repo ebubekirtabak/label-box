@@ -19,29 +19,29 @@
         },
         methods: {
             setArray (files, index) {
-                this.imagesArray = this.$store.getters.getImageList
-                const xmlList = this.$store.getters.getXmlList
-                const i = index
-                console.log('Image: ' + i)
-                console.log('Type: ' + files[i].type)
-                console.log('tmpPath: ' + files[i].webkitRelativePath)
+                this.imagesArray = this.$store.getters.getImageList;
+                const xmlList = this.$store.getters.getXmlList;
+                const i = index;
+                console.log('Image: ' + i);
+                console.log('Type: ' + files[i].type);
+                console.log('tmpPath: ' + files[i].webkitRelativePath);
 
                 if ((index + 1) < files.length) {
                     if (files[i].type.startsWith('image')) {
-                        const tmpPath = URL.createObjectURL(files[i])
-                        this.imagesArray.push({file: files[i], fileData: tmpPath, name: files[i].name, tagList: [], width: 0, height: 0})
-                        this.$store.commit('setImageList', this.imagesArray)
+                        const tmpPath = URL.createObjectURL(files[i]);
+                        this.imagesArray.push({file: files[i], fileData: tmpPath, name: files[i].name, tagList: [], width: 0, height: 0});
+                        this.$store.commit('setImageList', this.imagesArray);
                         ++ index;
-                        this.setArray(files, index)
+                        this.setArray(files, index);
                     } else {
-                        this.xmlFiles.push(files[i])
-                        ++ index
-                        this.setArray(files, index)
+                        this.xmlFiles.push(files[i]);
+                        ++ index;
+                        this.setArray(files, index);
                     }
 
                 } else {
                     if (this.xmlFiles.length > 0) {
-                        this.setXMLData(this.xmlFiles, 0)
+                        this.setXMLData(this.xmlFiles, 0);
                     }
                 }
             },
@@ -51,31 +51,31 @@
                     return
                 }
 
-                this.xmlFiles = []
-                this.setArray(files, 0)
+                this.xmlFiles = [];
+                this.setArray(files, 0);
             },
             setXMLData (files, index) {
                 if ((index + 1) < files.length) {
-                    const i = index
-                    const xmlService = new XmlServices()
-                    const xmlList = this.$store.getters.getXmlList
+                    const i = index;
+                    const xmlService = new XmlServices();
+                    const xmlList = this.$store.getters.getXmlList;
                     xmlService.xmlToJsonFromFile(files[i]).then((data) => {
                         if (data !== '400') {
-                            console.log('reading :' + files[i].name)
-                            xmlList.push(files[i])
-                            const imageIndex = this.getImageFromName(data.annotation.filename._text)
-                            const _width = parseInt(data.annotation.size.width._text)
-                            const _height = parseInt(data.annotation.size.height._text)
-                            this.imagesArray[imageIndex].width = _width
-                            this.imagesArray[imageIndex].height = _height
+                            console.log('reading :' + files[i].name);
+                            xmlList.push(files[i]);
+                            const imageIndex = this.getImageFromName(data.annotation.filename._text);
+                            const _width = parseInt(data.annotation.size.width._text);
+                            const _height = parseInt(data.annotation.size.height._text);
+                            this.imagesArray[imageIndex].width = _width;
+                            this.imagesArray[imageIndex].height = _height;
                             if (imageIndex !== -1 && data.annotation.object && data.annotation.object.length && data.annotation.object.length > 0) {
                                 data.annotation.object.forEach((item) => {
                                     const tagId = (this.imagesArray[imageIndex].tagList.length + 1)
-                                    const bndbox = item.bndbox
-                                    const xmin = parseInt(bndbox.xmin._text)
-                                    const xmax = parseInt(bndbox.xmax._text)
-                                    const ymin = parseInt(bndbox.ymin._text)
-                                    const ymax = parseInt(bndbox.ymax._text)
+                                    const bndbox = item.bndbox;
+                                    const xmin = parseInt(bndbox.xmin._text);
+                                    const xmax = parseInt(bndbox.xmax._text);
+                                    const ymin = parseInt(bndbox.ymin._text);
+                                    const ymax = parseInt(bndbox.ymax._text);
 
                                     this.imagesArray[imageIndex].tagList.push({
                                         id: tagId, label: item.name._text, class: item.pose._text, xmin: xmin,
@@ -84,19 +84,19 @@
                                     this.$store.commit('setImageList', this.imagesArray)
                                 })
                             } else if (imageIndex !== -1 && data.annotation.object && data.annotation.object.name) {
-                                const tagId = (this.imagesArray[imageIndex].tagList.length + 1)
-                                const item = data.annotation.object
-                                const bndbox = item.bndbox
-                                const xmin = parseInt(bndbox.xmin._text)
-                                const xmax = parseInt(bndbox.xmax._text)
-                                const ymin = parseInt(bndbox.ymin._text)
-                                const ymax = parseInt(bndbox.ymax._text)
+                                const tagId = (this.imagesArray[imageIndex].tagList.length + 1);
+                                const item = data.annotation.object;
+                                const bndbox = item.bndbox;
+                                const xmin = parseInt(bndbox.xmin._text);
+                                const xmax = parseInt(bndbox.xmax._text);
+                                const ymin = parseInt(bndbox.ymin._text);
+                                const ymax = parseInt(bndbox.ymax._text);
 
                                 this.imagesArray[imageIndex].tagList.push({
                                     id: tagId, label: item.name._text, class: item.pose._text, xmin: xmin,
                                     width: (xmax - xmin), ymin: ymin, height: (ymax - ymin), isSetResolution: false
                                 });
-                                this.$store.commit('setImageList', this.imagesArray)
+                                this.$store.commit('setImageList', this.imagesArray);
                             }
 
                             this.$store.commit('setXmlList', xmlList);
@@ -112,19 +112,19 @@
             },
             getImageData (file) {
                 return new Promise((resolve) => {
-                    const reader = new FileReader()
+                    const reader = new FileReader();
                     reader.onload = (e) => {
                         resolve({data: e.target.result, file: file})
-                    }
+                    };
 
-                    reader.readAsDataURL(file)
+                    reader.readAsDataURL(file);
                 })
             },
             getImageFromName (name) {
                 const index = -1
                 for (const i = 0; i < this.imagesArray.length; ++i) {
                     if (this.imagesArray[i].name === name) {
-                        index = i
+                        index = i;
                         return index
                     }
                 }
