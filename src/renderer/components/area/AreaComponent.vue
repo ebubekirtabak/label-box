@@ -242,20 +242,20 @@
                             }
 
                             if ((this.selectedTag.ymin) < this.mouse.y) {
-                                this.mouse.direction = 'v'
-                                move = (this.mouse.y - this.selectedTag.ymin)
-                                console.log('Movevvvv: ' + move)
-                                this.selectedTag.height -= move
-                                this.selectedTag.ymin += move
+                                this.mouse.direction = 'v';
+                                move = (this.mouse.y - this.selectedTag.ymin);
+                                console.log('Movevvvv: ' + move);
+                                this.selectedTag.height -= move;
+                                this.selectedTag.ymin += move;
                             } else {
-                                move = (this.selectedTag.ymin - this.mouse.y)
-                                this.mouse.direction = '^'
-                                console.log('Move ^^: ' + move)
-                                this.selectedTag.height += move
-                                this.selectedTag.ymin -= move
+                                move = (this.selectedTag.ymin - this.mouse.y);
+                                this.mouse.direction = '^';
+                                console.log('Move ^^: ' + move);
+                                this.selectedTag.height += move;
+                                this.selectedTag.ymin -= move;
                             }
 
-                            break
+                            break;
                         case 'tr':
                             move = (this.mouse.x - this.selectedTag.xmin)
 
