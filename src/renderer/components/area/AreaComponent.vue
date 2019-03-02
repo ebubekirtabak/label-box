@@ -168,8 +168,8 @@
                     });
                     this.selectedTag = this.selectedImage.tagList[this.selectedImage.tagList.length - 1]
                 } else {
-                    console.log('---- draw finish -----')
-                    this.selectedTag.mode = 'edit'
+                    console.log('---- draw finish -----');
+                    this.selectedTag.mode = 'edit';
                     this.openEditMode()
                     /* this.isSelectedTag = false
                     this.selectedTag = {} */
@@ -183,61 +183,62 @@
 
                     if ((this.mouse.y + this.imageContent.scrollTop) > this.mouse.startY) {
                         // mouse down v
-                        console.log('mouse down v')
-                        this.mouse.direction = 'v'
+                        console.log('mouse down v');
+                        this.mouse.direction = 'v';
                         elHeight = Math.abs((this.mouse.startY - this.mouse.y) - this.imageContent.scrollTop)
                         /* var elY1 = ((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY < 0) ? ((this.mouse.y + this.imageContent.scrollTop) - this.imageContent.offsetTop) : (this.mouse.startY) */
                     } else {
                         // mouse up ^
-                        console.log('mouse up ^')
-                        this.mouse.direction = '^'
-                        elHeight = Math.abs((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY)
+                        console.log('mouse up ^');
+                        this.mouse.direction = '^';
+                        elHeight = Math.abs((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY);
                         if ((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY < 0) {
-                            this.selectedTag.ymin = ((this.mouse.y + this.imageContent.scrollTop))
+                            this.selectedTag.ymin = ((this.mouse.y + this.imageContent.scrollTop));
                         } else {
-                            this.selectedTag.ymin = ((this.mouse.y + this.imageContent.scrollTop))
+                            this.selectedTag.ymin = ((this.mouse.y + this.imageContent.scrollTop));
                         }
                     }
-                    console.log('startX:' + this.mouse.startY + ' - ' + this.mouse.y)
-                    console.log(' ' + (this.mouse.y + this.imageContent.scrollTop + this.imageContent.offsetTop) + ' - ' + this.mouse.startY)
-                    var elX1 = 0
+
+                    console.log('startX:' + this.mouse.startY + ' - ' + this.mouse.y);
+                    console.log(' ' + (this.mouse.y + this.imageContent.scrollTop + this.imageContent.offsetTop) + ' - ' + this.mouse.startY);
+                    var elX1 = 0;
                     if (((this.mouse.x) + this.imageContent.scrollLeft) - this.mouse.startX < 0) {
-                        elX1 = ((this.mouse.x) + this.imageContent.scrollLeft)
+                        elX1 = ((this.mouse.x) + this.imageContent.scrollLeft);
                     } else {
-                        elX1 = this.mouse.startX
+                        elX1 = this.mouse.startX;
                     }
 
-                    this.selectedTag.width = elWidth
-                    this.selectedTag.height = elHeight
-                    this.selectedTag.xmin = elX1
+                    this.selectedTag.width = elWidth;
+                    this.selectedTag.height = elHeight;
+                    this.selectedTag.xmin = elX1;
                 } else if (this.selectedTag && this.selectedTag.mode === 'over') {
-                    console.log('over mode --')
+                    console.log('over mode --');
                     if (this.mouse.oldX > 0 && this.isMouseDown) {
-                        this.selectedTag.xmin += (this.mouse.x - this.mouse.oldX)
+                        this.selectedTag.xmin += (this.mouse.x - this.mouse.oldX);
                     }
 
                     if (this.mouse.oldY > 0 && this.isMouseDown) {
-                        this.selectedTag.ymin += (this.mouse.y - this.mouse.oldY)
+                        this.selectedTag.ymin += (this.mouse.y - this.mouse.oldY);
                     }
 
-                    this.mouse.oldX = this.mouse.x
-                    this.mouse.oldY = this.mouse.y
+                    this.mouse.oldX = this.mouse.x;
+                    this.mouse.oldY = this.mouse.y;
                 } else if (this.selectedTag && this.selectedTag.mode === 'resize') {
-                    var move = 0
+                    var move = 0;
                     switch (this.selectedBorder) {
                         case 'tl':
-                            move = (this.mouse.x - this.selectedTag.xmin)
+                            move = (this.mouse.x - this.selectedTag.xmin);
 
                             if (this.mouse.x > this.selectedTag.xmin) {
-                                move = this.mouse.x - this.selectedTag.xmin
-                                this.mouse.direction = '>'
-                                this.selectedTag.width -= move
-                                this.selectedTag.xmin += move
+                                move = this.mouse.x - this.selectedTag.xmin;
+                                this.mouse.direction = '>';
+                                this.selectedTag.width -= move;
+                                this.selectedTag.xmin += move;
                             } else {
-                                move = this.selectedTag.xmin - this.mouse.x
-                                this.mouse.direction = '<'
-                                this.selectedTag.width += move
-                                this.selectedTag.xmin -= move
+                                move = this.selectedTag.xmin - this.mouse.x;
+                                this.mouse.direction = '<';
+                                this.selectedTag.width += move;
+                                this.selectedTag.xmin -= move;
                             }
 
                             if ((this.selectedTag.ymin) < this.mouse.y) {
