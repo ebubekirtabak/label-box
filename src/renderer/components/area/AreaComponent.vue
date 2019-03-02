@@ -104,45 +104,45 @@
             },
             onMouseDown: function (event, element) {
                 if (element) {
-                    this.isMouseDown = true
+                    this.isMouseDown = true;
                     if (element.mode !== 'create' && element.mode !== 'edit') {
-                        this.selectedTag = element
-                        this.selectedTag.mode = 'over'
+                        this.selectedTag = element;
+                        this.selectedTag.mode = 'over';
                     }
                 }
             },
             onMouseOverBorder: function (event, item, border) {
                 if (this.selectedTag.mode !== 'edit' && this.selectedTag.mode !== 'create') {
-                    this.selectedTag = item
-                    this.selectedTag.mode = 'resize'
-                    this.isSelectedTag = true
-                    this.selectedBorder = border
+                    this.selectedTag = item;
+                    this.selectedTag.mode = 'resize';
+                    this.isSelectedTag = true;
+                    this.selectedBorder = border;
                 }
             },
             onLeaveMouseBorder: function (event) {
                 if (this.selectedTag.mode === 'resize') {
                     setTimeout(function () {
-                        self.selectedTag = 'none'
-                        self.isSelectedTag = false
-                        self.selectedTag = {}
-                    }, 500)
+                        self.selectedTag = 'none';
+                        self.isSelectedTag = false;
+                        self.selectedTag = {};
+                    }, 500);
                 }
             },
             onMouseUp: function (event) {
-                this.isMouseDown = false
+                this.isMouseDown = false;;
             },
             onmouseOver: function (evet, element) {
-                console.log('mouseOver +++++')
+                console.log('mouseOver +++++');
                 if (element.mode !== 'create' && this.selectedTag.mode !== 'edit') {
-                    this.selectedTag = element
-                    this.selectedTag.mode = 'over'
+                    this.selectedTag = element;
+                    this.selectedTag.mode = 'over';
                 }
             },
             onMouseLeave: function (evetn, element) {
-                console.log('mouseLeave ------')
+                console.log('mouseLeave ------');
                 if (element.mode !== 'create' && this.selectedTag.mode !== 'edit') {
-                    this.selectedTag.mode = 'none'
-                    this.selectedTag = {}
+                    this.selectedTag.mode = 'none';
+                    this.selectedTag = {};
                 }
             },
             onMouseClick: function (event) {
