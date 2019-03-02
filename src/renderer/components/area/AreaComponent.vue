@@ -148,17 +148,24 @@
             onMouseClick: function (event) {
                 if (!this.isSelectedTag) {
                     this.isSelectedTag = true
-                    this.imageContent.offsetTop = this.$refs.area_content.offsetParent.offsetTop
-                    this.imageContent.offsetLeft = this.$refs.area_content.offsetParent.offsetLeft
-                    this.imageContent.scrollTop = this.$refs.area_content.offsetParent.scrollTop
-                    this.imageContent.scrollLeft = this.$refs.area_content.offsetParent.scrollLeft
-                    this.mouse.y = (event.clientY + this.imageContent.scrollTop)
-                    this.mouse.x = (event.clientX + this.imageContent.offsetLeft + this.imageContent.scrollLeft)
-                    this.mouse.startY = (event.clientY - this.imageContent.offsetTop) + this.imageContent.scrollTop
-                    this.mouse.startX = (event.clientX - this.imageContent.offsetLeft) + this.imageContent.scrollLeft
+                    this.imageContent.offsetTop = this.$refs.area_content.offsetParent.offsetTop;
+                    this.imageContent.offsetLeft = this.$refs.area_content.offsetParent.offsetLeft;
+                    this.imageContent.scrollTop = this.$refs.area_content.offsetParent.scrollTop;
+                    this.imageContent.scrollLeft = this.$refs.area_content.offsetParent.scrollLeft;
+                    this.mouse.y = (event.clientY + this.imageContent.scrollTop);
+                    this.mouse.x = (event.clientX + this.imageContent.offsetLeft + this.imageContent.scrollLeft);
+                    this.mouse.startY = (event.clientY - this.imageContent.offsetTop) + this.imageContent.scrollTop;
+                    this.mouse.startX = (event.clientX - this.imageContent.offsetLeft) + this.imageContent.scrollLeft;
                     this.selectedImage.tagList.push({
-                        id: (this.selectedImage.tagList.length + 1), label: '', class: '', xmin: this.mouse.startX, ymin: this.mouse.startY, width: 1, height: 1, mode: 'create'
-                    })
+                        id: (this.selectedImage.tagList.length + 1),
+                        label: '',
+                        class: '',
+                        xmin: this.mouse.startX,
+                        ymin: this.mouse.startY,
+                        width: 1,
+                        height: 1,
+                        mode: 'create'
+                    });
                     this.selectedTag = this.selectedImage.tagList[this.selectedImage.tagList.length - 1]
                 } else {
                     console.log('---- draw finish -----')
