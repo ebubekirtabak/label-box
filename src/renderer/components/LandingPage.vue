@@ -4,26 +4,10 @@
     <main>
       <div class="left-side">
         <span class="title">
-          Welcome to your new project!
+          Welcome to Label Box App
         </span>
+        <button @click="openFolder()"> Open Workspace </button>
         <system-information></system-information>
-      </div>
-
-      <div class="right-side">
-        <div class="doc">
-          <div class="title">Getting Started</div>
-          <p>
-            electron-vue comes packed with detailed documentation that covers everything from
-            internal configurations, using the project structure, building your application,
-            and so much more.
-          </p>
-          <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button><br><br>
-        </div>
-        <div class="doc">
-          <div class="title alt">Other Documentation</div>
-          <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-          <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
-        </div>
       </div>
     </main>
   </div>
@@ -31,6 +15,9 @@
 
 <script>
   import SystemInformation from './LandingPage/SystemInformation';
+  const electron = require('electron').remote;
+  const fs = require('fs');
+  const { dialog } = electron;
 
   export default {
     name: 'landing-page',
@@ -38,6 +25,16 @@
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link);
+      },
+      openFolder () {
+        dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, (result) => {
+          const path = result[0];
+          const resultsArray = fs.readdirSync(path, (err, data) => {
+            if (err) throw err;
+            console.log(data);
+          });
+          console.log(resultsArray);
+        });
       },
     },
   };
