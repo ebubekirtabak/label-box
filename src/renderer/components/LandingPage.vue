@@ -41,10 +41,7 @@
           const folderGroups = {};
           result.forEach((path) => {
             folderGroups[path] = [];
-            const resultsArray = fs.readdirSync((path), (err, data) => {
-              if (err) throw err;
-              console.log(data);
-            });
+            const resultsArray = fs.readdirSync(path);
             folderGroups[path] = resultsArray;
           });
 
