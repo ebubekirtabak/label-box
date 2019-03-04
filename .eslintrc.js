@@ -23,6 +23,8 @@ module.exports = {
     'import/extensions': 0,
     'import/newline-after-import': 0,
     'no-multi-assign': 0,
+    "class-methods-use-this": [0],
+    "object-curly-newline": ["never", { "multiline": true }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }
