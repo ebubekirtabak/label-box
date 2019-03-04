@@ -21,33 +21,33 @@ export default class ExportServices {
 
   createXmlData(xmlList, img) {
     const file = img.file;
-
+    const { name, path, width, height } = file;
+    const { imgResolutions } = img;
     let xmlText = '<annotation>\n' +
-    `\t<folder>${file.name}</folder>\n` +
-    `\t<filename>${file.name}</filename>\n` +
-    `\t<path>${file.path}</path>\n` +
+    `\t<folder>${ name }</folder>\n` +
+    `\t<filename>${ name }</filename>\n` +
+    `\t<path>${ path }</path>\n` +
     '\t<source>\n' +
     '\t\t<database>Unknown</database>\n' +
     '\t</source>\n' +
     '\t<size>\n' +
-    `\t\t<width>${file.width}</width>\n` +
-    `\t\t<height>${file.height}</height>\n` +
+    `\t\t<width>${ width }</width>\n` +
+    `\t\t<height>${ height }</height>\n` +
     '\t\t<depth>3</depth>\n' +
     '\t</size>\n' +
     '\t<segmented>0</segmented>\n';
     xmlList.forEach((item) => {
-      if (item.isSetResolution && img.imgResolutions) {
-        const imgResolutions = img.imgResolutions;
+      if (item.isSetResolution && imgResolutions) {
         item.isSetResolution = true;
         let difference = (imgResolutions.width - imgResolutions.naturalWidth);
         console.log(` > ${imgResolutions.width - imgResolutions.naturalWidth} < `);
         $this.perCent.width = (difference / imgResolutions.naturalWidth) * 100; // difference
         difference = (imgResolutions.height - imgResolutions.naturalHeight);
         $this.perCent.height = (difference / imgResolutions.naturalHeight) * 100; // difference
-        console.log(`width: ${imgResolutions.width} : naturalWidth : ${imgResolutions.naturalWidth} : difference : ${$this.perCent.width}`);
-        console.log(`height: ${imgResolutions.height} : naturalHeight: ${imgResolutions.naturalHeight} : difference : ${$this.perCent.height}`);
+        console.log(`width: ${ imgResolutions.width } : naturalWidth : ${ imgResolutions.naturalWidth } : difference : ${ $this.perCent.width }`);
+        console.log(`height: ${ imgResolutions.height } : naturalHeight: ${ imgResolutions.naturalHeight } : difference : ${ $this.perCent.height }`);
         if (imgResolutions.width > imgResolutions.naturalWidth) {
-          console.log(`Width: + ${item.width / 100 * $this.perCent.width}`);
+          console.log(`Width: + ${ item.width / 100 * $this.perCent.width }`);
           item.width = parseInt(item.width + (item.width / 100 * $this.perCent.width));
           item.xmin = parseInt(item.xmin + (item.xmin / 100 * $this.perCent.width));
         } else {
