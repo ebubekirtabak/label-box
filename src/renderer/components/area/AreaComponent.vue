@@ -75,11 +75,12 @@
           this.isSelectedTag = false;
         },
         loadedImage () {
+          const { width, height, naturalWidth, naturalHeight } = this.$refs.main_image;
           this.isLoad = true;
-          this.imgResolutions.naturalWidth = this.$refs.main_image.naturalWidth;
-          this.imgResolutions.naturalHeight = this.$refs.main_image.naturalHeight;
-          this.imgResolutions.width = this.$refs.main_image.width;
-          this.imgResolutions.height = this.$refs.main_image.height;
+          this.imgResolutions.naturalWidth = naturalWidth;
+          this.imgResolutions.naturalHeight = naturalHeight;
+          this.imgResolutions.width = width;
+          this.imgResolutions.height = height;
           this.imgResolutions.widthRate = this.imgResolutions.naturalWidth / this.imgResolutions.width;
           this.imgResolutions.heightRate = this.imgResolutions.naturalHeight / this.imgResolutions.height;
         },
@@ -121,6 +122,7 @@
           }
         },
         onLeaveMouseBorder (event) {
+          event.preventDefault();
           if (this.selectedTag.mode === 'resize') {
             setTimeout(() => {
               self.selectedTag = 'none';
