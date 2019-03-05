@@ -364,25 +364,26 @@
         },
         onBottomResize (selectedBorder) {
           let move = 0;
+          const { width, xmin } = this.selectedTag;
           switch (selectedBorder) {
             case 'br': // bottom right action
-              move = (this.mouse.x - this.selectedTag.xmin);
+              move = (this.mouse.x - xmin);
 
-              if ((this.selectedTag.xmin + this.selectedTag.width) < this.mouse.x) {
-                move = this.mouse.x - (this.selectedTag.xmin + this.selectedTag.width);
+              if ((xmin + this.selectedTag.width) < this.mouse.x) {
+                move = this.mouse.x - (xmin + width);
                 this.mouse.direction = '>';
                 this.selectedTag.width += move;
               } else {
-                move = (this.selectedTag.xmin + this.selectedTag.width) - this.mouse.x;
+                move = (xmin + width) - this.mouse.x;
                 this.mouse.direction = '<';
                 this.selectedTag.width -= move;
               }
 
               break;
             case 'bl': // bottom left action
-              move = (this.mouse.x - this.selectedTag.xmin);
+              move = (this.mouse.x - xmin);
 
-              if (this.selectedTag.xmin < this.mouse.x) {
+              if (xmin < this.mouse.x) {
                 console.log('<v');
                 this.mouse.direction = '>';
                 this.selectedTag.width -= move;
