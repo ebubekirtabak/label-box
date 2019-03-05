@@ -151,14 +151,20 @@
         onMouseClick (event) {
           if (!this.isSelectedTag) {
             this.isSelectedTag = true;
-            this.imageContent.offsetTop = this.$refs.area_content.offsetParent.offsetTop;
-            this.imageContent.offsetLeft = this.$refs.area_content.offsetParent.offsetLeft;
-            this.imageContent.scrollTop = this.$refs.area_content.offsetParent.scrollTop;
-            this.imageContent.scrollLeft = this.$refs.area_content.offsetParent.scrollLeft;
-            this.mouse.y = (event.clientY + this.imageContent.scrollTop);
-            this.mouse.x = (event.clientX + this.imageContent.offsetLeft + this.imageContent.scrollLeft);
-            this.mouse.startY = (event.clientY - this.imageContent.offsetTop) + this.imageContent.scrollTop;
-            this.mouse.startX = (event.clientX - this.imageContent.offsetLeft) + this.imageContent.scrollLeft;
+            const {
+              offsetTop,
+              offsetLeft,
+              scrollTop,
+              scrollLeft
+            } = this.$refs.area_content.offsetParent;
+            this.imageContent.offsetTop = offsetTop;
+            this.imageContent.offsetLeft = offsetLeft;
+            this.imageContent.scrollTop = scrollTop;
+            this.imageContent.scrollLeft = scrollLeft;
+            this.mouse.y = (event.clientY + scrollTop);
+            this.mouse.x = (event.clientX + offsetLeft + scrollLeft);
+            this.mouse.startY = (event.clientY - offsetTop) + scrollTop;
+            this.mouse.startX = (event.clientX - offsetLeft) + scrollLeft;
             this.selectedImage.tagList.push({
               id: (this.selectedImage.tagList.length + 1),
               label: '',
