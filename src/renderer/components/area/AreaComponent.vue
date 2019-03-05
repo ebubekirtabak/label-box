@@ -155,7 +155,7 @@
               offsetTop,
               offsetLeft,
               scrollTop,
-              scrollLeft
+              scrollLeft,
             } = this.$refs.area_content.offsetParent;
             this.imageContent.offsetTop = offsetTop;
             this.imageContent.offsetLeft = offsetLeft;
@@ -408,12 +408,13 @@
         },
         setMousePosition (e) {
           const ev = e || window.event; // Moz || IE
+          const { offsetLeft, offsetTop } = this.imageContent;
           if (ev.pageX) { // Moz
-            this.mouse.x = (ev.pageX + window.pageXOffset) - this.imageContent.offsetLeft;
-            this.mouse.y = (ev.pageY + window.pageYOffset) - this.imageContent.offsetTop;
+            this.mouse.x = (ev.pageX + window.pageXOffset) - offsetLeft;
+            this.mouse.y = (ev.pageY + window.pageYOffset) - offsetTop;
           } else if (ev.clientX) { // IE
-            this.mouse.x = (ev.clientX + document.body.scrollLeft) - this.imageContent.offsetLeft;
-            this.mouse.y = (ev.clientY + document.body.scrollTop) - this.imageContent.offsetTop;
+            this.mouse.x = (ev.clientX + document.body.scrollLeft) - offsetLeft;
+            this.mouse.y = (ev.clientY + document.body.scrollTop) - offsetTop;
           }
         },
         onmouseClick () {
