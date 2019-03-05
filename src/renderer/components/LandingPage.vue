@@ -6,7 +6,7 @@
         <span class="title">
           Welcome to Label Box App
         </span>
-        <button @click="readDirectorys()"> Open Workspace </button>
+        <button @click="openPaths()"> Open Workspace </button>
         <system-information></system-information>
       </div>
     </main>
@@ -36,13 +36,12 @@
           console.log(resultsArray);
         });
       },
-      readDirectorys () {
+      openPaths () {
         dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, (result) => {
           const folderGroups = {};
           result.forEach((path) => {
             folderGroups[path] = [];
-            const resultsArray = fs.readdirSync(path);
-            folderGroups[path] = resultsArray;
+            folderGroups[path] = fs.readdirSync(path) || [];
           });
 
           console.log(folderGroups);
