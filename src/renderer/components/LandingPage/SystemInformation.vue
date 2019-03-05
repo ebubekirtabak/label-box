@@ -26,12 +26,21 @@
         <div class="name">Platform:</div>
         <div class="value">{{ platform }}</div>
       </div>
+      <div class="item">
+        <div class="name">Platform:</div>
+        <div class="value">{{ folderGroups }}</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
+    computed: {
+      getFolderGroups () {
+        return this.$store.getters.getFolderGroups;
+      },
+    },
     data () {
       return {
         electron: process.versions.electron,
@@ -40,6 +49,7 @@
         path: this.$route.path,
         platform: require('os').platform(),
         vue: require('vue/package.json').version,
+        folderGroups: this.$store.getters.getFolderGroups,
       };
     },
   };

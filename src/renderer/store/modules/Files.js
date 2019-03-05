@@ -4,7 +4,6 @@ const state = {
 
 const mutations = {
   SET_FOLDER_GROUPS (state, n) {
-    debugger;
     state.folderGroups = n;
   },
 };
@@ -15,7 +14,6 @@ const getters = {
 
 const actions = {
   setFolderGroups ({ commit }, n) {
-    debugger;
     commit('SET_FOLDER_GROUPS', n);
   },
 };
