@@ -10,13 +10,13 @@ export default {
   name: 'App',
   data () {
     return {
-      taglist: [ /* {label: "label", class: "className", xmin: 0, ymin: 0, xmax: 100, ymax: 100, mode: 'create'} */ ]
-    }
+      taglist: [],
+    };
   },
   state: {
-    taglist: [ /* {label: "label", class: "className", xmin: 0, ymin: 0, xmax: 100, ymax: 100, mode: 'create'} */ ]
-  }
-}
+    taglist: [],
+  },
+};
 </script>
 
 <style>
