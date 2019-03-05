@@ -81,8 +81,8 @@
           this.imgResolutions.naturalHeight = naturalHeight;
           this.imgResolutions.width = width;
           this.imgResolutions.height = height;
-          this.imgResolutions.widthRate = this.imgResolutions.naturalWidth / this.imgResolutions.width;
-          this.imgResolutions.heightRate = this.imgResolutions.naturalHeight / this.imgResolutions.height;
+          this.imgResolutions.widthRate = naturalWidth / width;
+          this.imgResolutions.heightRate = naturalHeight / height;
         },
         openEditMode (tag) {
           setTimeout(() => {
