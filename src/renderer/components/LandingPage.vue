@@ -37,16 +37,42 @@
         });
       },
       openPaths () {
-        dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, (result) => {
-          const folderGroups = {};
-          result.forEach((path) => {
-            folderGroups[path] = [];
-            folderGroups[path] = fs.readdirSync(path) || [];
-          });
-
-          console.log(folderGroups);
+        this.folderSelector().then((result) => {
+          const some = this.$store.dispatch('setFolderGroups', result);
+          console.log(some);
         });
       },
+      folderSelector () {
+        return new Promise((resolve) => {
+          dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, (result) => {
+            const folderGroups = {};
+            result.forEach((path) => {
+              folderGroups[path] = [];
+              folderGroups[path] = fs.readdirSync(path) || [];
+            });
+
+            console.log(folderGroups);
+            resolve(folderGroups);
+          });
+        });
+      },
+    },
+    computed: {
+      getFolderGroups () {
+        debugger;
+        return this.$store.getters.getFolderGroups;
+      },
+    },
+    watch: {
+      getFolderGroups (n, i) {
+        debugger;
+        console.log({ n, i });
+      },
+    },
+    data () {
+      return {
+        folderGroups: [],
+      };
     },
   };
 </script>
