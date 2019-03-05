@@ -395,6 +395,8 @@
               }
 
               break;
+            default:
+              break;
           }
 
           if ((this.selectedTag.ymin + this.selectedTag.height) < this.mouse.y) {
