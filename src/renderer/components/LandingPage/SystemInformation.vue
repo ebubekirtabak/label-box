@@ -37,8 +37,14 @@
 <script>
   export default {
     computed: {
-      getFolderGroups () {
+      folderGroups () {
         return this.$store.getters.getFolderGroups;
+      },
+    },
+    watch: {
+      folderGroups (n, i) {
+        debugger;
+        console.log({ n, i });
       },
     },
     data () {
@@ -49,7 +55,6 @@
         path: this.$route.path,
         platform: require('os').platform(),
         vue: require('vue/package.json').version,
-        folderGroups: this.$store.getters.getFolderGroups,
       };
     },
   };
