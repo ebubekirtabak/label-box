@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import { mapMutations, mapActions } from 'vuex';
   import SystemInformation from './LandingPage/SystemInformation';
   const electron = require('electron').remote;
   const fs = require('fs');
@@ -23,6 +24,12 @@
     name: 'landing-page',
     components: { SystemInformation },
     methods: {
+      ...mapActions([
+        'setFolderGroups',
+      ]),
+      ...mapMutations([
+        'SET_FOLDER_GROUPS',
+      ]),
       open (link) {
         this.$electron.shell.openExternal(link);
       },
@@ -38,9 +45,14 @@
       },
       openPaths () {
         this.folderSelector().then((result) => {
-          const some = this.$store.dispatch('setFolderGroups', result);
-          console.log(some);
+          this.updateFolderGroups(result);
         });
+      },
+      updateFolderGroups (result) {
+        console.log(this.folderGroups);
+        const some = this.setFolderGroups([result]);
+        console.log(some);
+        console.log(this.folderGroups);
       },
       folderSelector () {
         return new Promise((resolve) => {
@@ -58,7 +70,7 @@
       },
     },
     computed: {
-      getFolderGroups () {
+      folderGroups () {
         debugger;
         return this.$store.getters.getFolderGroups;
       },
@@ -68,10 +80,14 @@
         debugger;
         console.log({ n, i });
       },
+      folderGroups (n, i) {
+        debugger;
+        console.log({ n, i });
+      },
     },
     data () {
       return {
-        folderGroups: [],
+
       };
     },
   };
