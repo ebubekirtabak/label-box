@@ -43,7 +43,6 @@
     },
     watch: {
       folderGroups (n, i) {
-        debugger;
         console.log({ n, i });
       },
     },
