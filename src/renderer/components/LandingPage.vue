@@ -49,10 +49,7 @@
         });
       },
       updateFolderGroups (result) {
-        console.log(this.folderGroups);
-        const some = this.setFolderGroups([result]);
-        console.log(some);
-        console.log(this.folderGroups);
+        this.setFolderGroups([result]);
       },
       folderSelector () {
         return new Promise((resolve) => {
@@ -71,17 +68,14 @@
     },
     computed: {
       folderGroups () {
-        debugger;
         return this.$store.getters.getFolderGroups;
       },
     },
     watch: {
       getFolderGroups (n, i) {
-        debugger;
         console.log({ n, i });
       },
       folderGroups (n, i) {
-        debugger;
         console.log({ n, i });
       },
     },
