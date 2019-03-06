@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 
 export default class ExportServices {
-  exportList(imagesArray) {
+  exportList (imagesArray) {
     const zip = new JSZip();
 
     imagesArray.forEach((img) => {
@@ -19,7 +19,7 @@ export default class ExportServices {
     });
   }
 
-  createXmlData(xmlList, img) {
+  createXmlData (xmlList, img) {
     const file = img.file;
     const { name, path, width, height } = file;
     const { imgResolutions } = img;

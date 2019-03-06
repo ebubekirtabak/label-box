@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron' // eslint-disable-line
-
+// eslint-disable-next-line no-unused-vars
+import store from '../renderer/store';
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -18,9 +19,9 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    height: 800,
     useContentSize: true,
-    width: 1000,
+    width: 1278,
     webPreferences: {
       webSecurity: false,
     },

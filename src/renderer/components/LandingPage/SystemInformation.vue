@@ -26,12 +26,26 @@
         <div class="name">Platform:</div>
         <div class="value">{{ platform }}</div>
       </div>
+      <div class="item">
+        <div class="name">Platform:</div>
+        <div class="value">{{ folderGroups }}</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
+    computed: {
+      folderGroups () {
+        return this.$store.getters.getFolderGroups;
+      },
+    },
+    watch: {
+      folderGroups (n, i) {
+        console.log({ n, i });
+      },
+    },
     data () {
       return {
         electron: process.versions.electron,
