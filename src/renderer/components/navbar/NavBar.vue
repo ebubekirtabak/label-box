@@ -90,10 +90,10 @@
                   const tagId = (this.imagesArray[imageIndex].tagList.length + 1);
                   const item = data.annotation.object;
                   const bndbox = item.bndbox;
-                  const xmin = parseInt(bndbox.xmin._text);
-                  const xmax = parseInt(bndbox.xmax._text);
-                  const ymin = parseInt(bndbox.ymin._text);
-                  const ymax = parseInt(bndbox.ymax._text);
+                  const xmin = parseInt(bndbox.xmin._text, 10);
+                  const xmax = parseInt(bndbox.xmax._text, 10);
+                  const ymin = parseInt(bndbox.ymin._text, 10);
+                  const ymax = parseInt(bndbox.ymax._text, 10);
 
                   this.imagesArray[imageIndex].tagList.push({
                     id: tagId,
@@ -131,7 +131,7 @@
         },
         getImageFromName (name) {
           let index = -1;
-          for (let i = 0; i < this.imagesArray.length; ++i) {
+          for (let i = 0; i < this.imagesArray.length; i += 1) {
             if (this.imagesArray[i].name === name) {
               index = i;
               return index;
