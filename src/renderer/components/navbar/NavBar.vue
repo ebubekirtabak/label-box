@@ -61,18 +61,18 @@
                 console.log(`reading :${ files[i].name }`);
                 xmlList.push(files[i]);
                 const imageIndex = this.getImageFromName(data.annotation.filename._text);
-                const _width = parseInt(data.annotation.size.width._text);
-                const _height = parseInt(data.annotation.size.height._text);
-                this.imagesArray[imageIndex].width = _width;
-                this.imagesArray[imageIndex].height = _height;
+                const width = parseInt(data.annotation.size.width._text, 10);
+                const height = parseInt(data.annotation.size.height._text, 10);
+                this.imagesArray[imageIndex].width = width;
+                this.imagesArray[imageIndex].height = height;
                 if (imageIndex !== -1 && data.annotation.object && data.annotation.object.length && data.annotation.object.length > 0) {
                   data.annotation.object.forEach((item) => {
                     const tagId = (this.imagesArray[imageIndex].tagList.length + 1);
                     const bndbox = item.bndbox;
-                    const xmin = parseInt(bndbox.xmin._text);
-                    const xmax = parseInt(bndbox.xmax._text);
-                    const ymin = parseInt(bndbox.ymin._text);
-                    const ymax = parseInt(bndbox.ymax._text);
+                    const xmin = parseInt(bndbox.xmin._text, 10);
+                    const xmax = parseInt(bndbox.xmax._text, 10);
+                    const ymin = parseInt(bndbox.ymin._text, 10);
+                    const ymax = parseInt(bndbox.ymax._text, 10);
 
                     this.imagesArray[imageIndex].tagList.push({
                       id: tagId,
@@ -131,7 +131,7 @@
         },
         getImageFromName (name) {
           let index = -1;
-          for (const i = 0; i < this.imagesArray.length; ++i) {
+          for (let i = 0; i < this.imagesArray.length; ++i) {
             if (this.imagesArray[i].name === name) {
               index = i;
               return index;
