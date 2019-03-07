@@ -68,12 +68,12 @@
     },
     watch: {
       imageList (n, i) {
-
+        console.log({ n, i });
       },
     },
     data () {
       return {
-        tagList: this.$store.state.tagList
+        tagList: this.$store.state.tagList,
       };
     },
   };
