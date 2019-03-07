@@ -1,9 +1,9 @@
 
 export default class XmlServices {
-  readXml(file) {
+  readXml (file) {
     return new Promise((resolve) => {
       const reader = new FileReader();
-      const onload = function (event) {
+      const onload = function () {
         resolve(reader.result);
       };
 
@@ -12,7 +12,7 @@ export default class XmlServices {
     });
   }
 
-  xmlToJson(xmlData) {
+  xmlToJson (xmlData) {
     return new Promise((resolve) => {
       const convert = require('xml-js');
       try {
@@ -25,9 +25,9 @@ export default class XmlServices {
     });
   }
 
-  xmlToJsonFromFile(file) {
+  xmlToJsonFromFile (file) {
     return new Promise((resolve) => {
-      console.log(`read File: ${file.name}`);
+      console.log(`read File: ${ file.name }`);
       this.readXml(file).then((data) => {
         this.xmlToJson(data).then((jsonData) => {
           if (jsonData.result === 200) {
