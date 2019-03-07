@@ -27,6 +27,11 @@ module.exports = {
     'class-methods-use-this': [0],
     'object-curly-newline': [0, { 'multiline': true }],
     "template-curly-spacing": ["error", "always"],
+    'max-len': ['error', {
+      'code': 140,
+      'ignoreUrls': true,
+      'ignoreRegExpLiterals': true
+    }],
     'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
