@@ -43,5 +43,7 @@ module.exports = {
     'no-plusplus': ['error', {
       'allowForLoopAfterthoughts': true
     }],
+    'no-underscore-dangle': 0,
+    "prefer-destructuring": [0, {"object": true, "array": false}]
   }
 }
