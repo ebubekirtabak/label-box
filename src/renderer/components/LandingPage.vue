@@ -50,6 +50,7 @@
       },
       updateFolderGroups (result) {
         this.setFolderGroups([result]);
+        this.$router.push('home');
       },
       folderSelector () {
         return new Promise((resolve) => {
