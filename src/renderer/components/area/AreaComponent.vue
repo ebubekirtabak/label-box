@@ -125,13 +125,14 @@
           event.preventDefault();
           if (this.selectedTag.mode === 'resize') {
             setTimeout(() => {
-              self.selectedTag = 'none';
-              self.isSelectedTag = false;
-              self.selectedTag = {};
+              this.selectedTag = 'none';
+              this.isSelectedTag = false;
+              this.selectedTag = {};
             }, 500);
           }
         },
         onMouseUp (event) {
+          event.preventDefault();
           this.isMouseDown = false;
         },
         onmouseOver (evet, element) {
@@ -195,7 +196,10 @@
               console.log('mouse down v');
               this.mouse.direction = 'v';
               elHeight = Math.abs((this.mouse.startY - this.mouse.y) - this.imageContent.scrollTop);
-              /* var elY1 = ((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY < 0) ? ((this.mouse.y + this.imageContent.scrollTop) - this.imageContent.offsetTop) : (this.mouse.startY) */
+              /* var elY1 = ((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY < 0) ?
+                ((this.mouse.y + this.imageContent.scrollTop) - this.imageContent.offsetTop) :
+                (this.mouse.startY)
+              */
             } else {
               // mouse up ^
               console.log('mouse up ^');
@@ -310,7 +314,7 @@
                   move = (this.selectedTag.ymin - this.mouse.y);
                   this.mouse.direction = '^';
                   this.selectedTag.height += move;
-                  console.log(`move v: ${ move }---` + ` ymin: ${ this.selectedTag.ymin }`);
+                  console.log(`move v: ${ move }--- ymin: ${ this.selectedTag.ymin }`);
                   this.selectedTag.ymin -= move;
                 }
 
@@ -349,8 +353,10 @@
               case 'r':
                 console.log((this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin)));
                 console.log(`resize mode: ${ this.selectedTag.width } - ${ this.selectedTag.xmin } X: ${ this.mouse.x }`);
-                this.selectedTag.width += (this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin));
+                this.selectedTag.width +=
+                  (this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin));
                 break;
+              default:
             }
 
             this.mouse.oldX = this.mouse.x;
@@ -360,7 +366,9 @@
           this.imageContent.offsetTop = this.$refs.area_content.offsetParent.offsetTop;
           this.imageContent.offsetLeft = this.$refs.area_content.offsetParent.offsetLeft;
           /* console.log('onmouseMove:' + event.clientX + ' - ' + event.clientY)
-            console.log('real position:' + (event.clientY - this.imageContent.offsetTop) + ' - ' + (event.clientX - this.imageContent.offsetLeft)) */
+            console.log('real position:' + (event.clientY - this.imageContent.offsetTop)
+            + ' - ' + (event.clientX - this.imageContent.offsetLeft))
+          */
         },
         onBottomResize (selectedBorder) {
           let move = 0;
@@ -433,49 +441,53 @@
       },
       watch: {
         selectedImage (n, i) {
+          console.log({ n, i });
           console.log(`selectedImage update: ${ this.selectedImage.fileData }`);
           this.isLoad = true;
           const $this = this;
           setTimeout(() => {
-            $this.imgResolutions.naturalWidth = $this.$refs.main_image.naturalWidth;
-            $this.imgResolutions.naturalHeight = $this.$refs.main_image.naturalHeight;
-            $this.imgResolutions.width = $this.$refs.main_image.width;
-            $this.imgResolutions.height = $this.$refs.main_image.height;
-            $this.imgResolutions.widthRate = $this.imgResolutions.naturalWidth / $this.imgResolutions.width;
-            $this.imgResolutions.heightRate = $this.imgResolutions.naturalHeight / $this.imgResolutions.height;
+            const { naturalWidth, naturalHeight, width, height } = $this.$refs.main_image;
+            $this.imgResolutions.naturalWidth = naturalWidth;
+            $this.imgResolutions.naturalHeight = naturalHeight;
+            $this.imgResolutions.width = width;
+            $this.imgResolutions.height = height;
+            $this.imgResolutions.widthRate = naturalWidth / width;
+            $this.imgResolutions.heightRate = naturalHeight / height;
             $this.selectedImage.imgResolutions = this.imgResolutions;
             $this.selectedImage.tagList.forEach((item) => {
               if (!item.isSetResolution) {
                 item.isSetResolution = true;
-                let difference = ($this.imgResolutions.width - $this.imgResolutions.naturalWidth);
+                let difference = (width - naturalWidth);
                 console.log(` > ${ $this.imgResolutions.width - $this.imgResolutions.naturalWidth } < `);
-                $this.perCent.width = (difference / $this.imgResolutions.naturalWidth) * 100; // difference
-                difference = ($this.imgResolutions.height - $this.imgResolutions.naturalHeight);
-                $this.perCent.height = (difference / $this.imgResolutions.naturalHeight) * 100; // difference
-                console.log(`width: ${ $this.imgResolutions.width } : naturalWidth : ${ $this.imgResolutions.naturalWidth } : difference : ${ $this.perCent.width }`);
-                console.log(`height: ${ $this.imgResolutions.height } : naturalHeight: ${ $this.imgResolutions.naturalHeight } : difference : ${ $this.perCent.height }`);
+                $this.perCent.width = (difference / naturalWidth) * 100; // difference
+                difference = (height - naturalHeight);
+                $this.perCent.height = (difference / naturalHeight) * 100; // difference
+                console.log(`width: ${ $this.imgResolutions.width } : naturalWidth :
+                 ${ $this.imgResolutions.naturalWidth } : difference : ${ $this.perCent.width }`);
+                console.log(`height: ${ $this.imgResolutions.height } : naturalHeight:
+                 ${ $this.imgResolutions.naturalHeight } : difference : ${ $this.perCent.height }`);
                 if ($this.imgResolutions.width > $this.imgResolutions.naturalWidth) {
-                  console.log(`Width: + ${ item.width / 100 * $this.perCent.width }`);
-                  item.width = parseInt(item.width + (item.width / 100 * $this.perCent.width));
-                  item.xmin = parseInt(item.xmin + (item.xmin / 100 * $this.perCent.width));
+                  console.log(`Width: + ${ (item.width / 100) * $this.perCent.width }`);
+                  item.width = parseInt(item.width + ((item.width / 100) * $this.perCent.width), 10);
+                  item.xmin = parseInt(item.xmin + ((item.xmin / 100) * $this.perCent.width), 10);
                 } else {
-                  item.width = parseInt(item.width + (item.width / 100 * $this.perCent.width));
-                  item.xmin = parseInt(item.xmin + (item.xmin / 100 * $this.perCent.width));
+                  item.width = parseInt(item.width + ((item.width / 100) * $this.perCent.width), 10);
+                  item.xmin = parseInt(item.xmin + ((item.xmin / 100) * $this.perCent.width), 10);
                 }
 
                 if ($this.imgResolutions.height > $this.imgResolutions.naturalHeight) {
-                  item.ymin = parseInt(item.ymin + (item.ymin / 100 * $this.perCent.height));
-                  item.height = parseInt(item.height + (item.height / 100 * $this.perCent.height));
+                  item.ymin = parseInt(item.ymin + ((item.ymin / 100) * $this.perCent.height), 10);
+                  item.height = parseInt(item.height + ((item.height / 100) * $this.perCent.height), 10);
                 } else {
-                  item.ymin = parseInt(item.ymin + (item.ymin / 100 * $this.perCent.height));
-                  item.height = parseInt(item.height + (item.height / 100 * $this.perCent.height));
+                  item.ymin = parseInt(item.ymin + ((item.ymin / 100) * $this.perCent.height), 10);
+                  item.height = parseInt(item.height + ((item.height / 100) * $this.perCent.height), 10);
                 }
               }
             });
           }, 250);
         },
         imageList (n, i) {
-
+          console.log({ n, i });
         },
       },
       data () {
