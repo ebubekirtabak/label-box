@@ -1,24 +1,28 @@
 // vue.config.js
 module.exports = {
   chainWebpack: (api, config) => {
+    const path = require('path');
+    function resolve (dir) {
+      return path.join(__dirname, dir);
+    }
+
     config.module
       .rule('vue')
       .use('vue-loader')
       .loader('vue-loader')
-      .alias
-      .set('@', api.resolve('src'))
       .tap(options => options);
 
+    config.resolve.alias
+      .set('@', resolve('src'));
+  },
+  configureWebpack: (api, config) => {
+    const path = require('path');
+    function resolve (dir) {
+      return path.join(__dirname, dir);
+    }
+
     config.resolve
-      .set('symlinks', false)
-      .extensions
-      .merge(['.js', '.jsx', '.vue', '.json'])
-      .end()
-      .modules
-      .add('node_modules')
-      .add(api.resolve('node_modules'))
-      .end()
       .alias
-      .set('@', api.resolve('src'));
+      .set('@', resolve('src'));
   },
 };
