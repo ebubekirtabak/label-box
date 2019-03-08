@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import { mapMutations, mapActions } from 'vuex';
   import SystemInformation from './LandingPage/SystemInformation';
   const electron = require('electron').remote;
   const fs = require('fs');
@@ -23,6 +24,12 @@
     name: 'landing-page',
     components: { SystemInformation },
     methods: {
+      ...mapActions([
+        'setFolderGroups',
+      ]),
+      ...mapMutations([
+        'SET_FOLDER_GROUPS',
+      ]),
       open (link) {
         this.$electron.shell.openExternal(link);
       },
@@ -37,16 +44,46 @@
         });
       },
       openPaths () {
-        dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, (result) => {
-          const folderGroups = {};
-          result.forEach((path) => {
-            folderGroups[path] = [];
-            folderGroups[path] = fs.readdirSync(path) || [];
-          });
-
-          console.log(folderGroups);
+        this.folderSelector().then((result) => {
+          this.updateFolderGroups(result);
         });
       },
+      updateFolderGroups (result) {
+        this.setFolderGroups([result]);
+        this.$router.push('home');
+      },
+      folderSelector () {
+        return new Promise((resolve) => {
+          dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, (result) => {
+            const folderGroups = {};
+            result.forEach((path) => {
+              folderGroups[path] = [];
+              folderGroups[path] = fs.readdirSync(path) || [];
+            });
+
+            console.log(folderGroups);
+            resolve(folderGroups);
+          });
+        });
+      },
+    },
+    computed: {
+      folderGroups () {
+        return this.$store.getters.getFolderGroups;
+      },
+    },
+    watch: {
+      getFolderGroups (n, i) {
+        console.log({ n, i });
+      },
+      folderGroups (n, i) {
+        console.log({ n, i });
+      },
+    },
+    data () {
+      return {
+
+      };
     },
   };
 </script>

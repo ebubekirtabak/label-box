@@ -23,10 +23,15 @@ module.exports = {
     'import/extensions': 0,
     'import/newline-after-import': 0,
     'no-multi-assign': 0,
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    'import/no-extraneous-dependencies': ['error', { 'devDependencies': true }],
     'class-methods-use-this': [0],
     'object-curly-newline': [0, { 'multiline': true }],
-    "template-curly-spacing": ["error", "always"],
+    'template-curly-spacing': ['error', 'always'],
+    'max-len': ['error', {
+      'code': 140,
+      'ignoreUrls': true,
+      'ignoreRegExpLiterals': true
+    }],
     'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
@@ -35,5 +40,10 @@ module.exports = {
       'named': 'always',
       'asyncArrow': 'always'
     }],
+    'no-plusplus': ['error', {
+      'allowForLoopAfterthoughts': true
+    }],
+    'no-underscore-dangle': 0,
+    "prefer-destructuring": [0, {"object": true, "array": false}]
   }
 }
