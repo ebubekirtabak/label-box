@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HomeComponent from '@/components/home/HomeComponent';
 
 Vue.use(Router);
 
@@ -18,7 +17,7 @@ export default new Router({
     {
       path: '/home',
       name: 'Home',
-      component: HomeComponent,
+      component: require('@/components/home/home').default,
     },
   ],
 });
