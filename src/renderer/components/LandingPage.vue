@@ -15,7 +15,9 @@
 
 <script>
   import { mapMutations, mapActions } from 'vuex';
+  import FolderReaderService from '../services/FolderReaderService';
   import SystemInformation from './LandingPage/SystemInformation';
+
   const electron = require('electron').remote;
   const fs = require('fs');
   const { dialog } = electron;
@@ -55,6 +57,8 @@
       folderSelector () {
         return new Promise((resolve) => {
           dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, (result) => {
+            const folderReader = new FolderReaderService();
+            folderReader.getAllFiles(result);
             const folderGroups = {};
             result.forEach((path) => {
               folderGroups[path] = [];
