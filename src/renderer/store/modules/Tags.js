@@ -13,12 +13,21 @@ const getters = {
   getXmlList: state => state.xmlList,
 };
 
+const actions = {
+  setImageList: ({ commit }, n) => {
+    commit('SET_IMAGE_LIST', n);
+  },
+  setSelectedImage: ({ commit }, n) => {
+    commit('SET_IMAGE_LIST', n);
+  },
+};
+
 const mutations = {
-  setImageList: (state, n) => {
+  SET_IMAGE_LIST: (state, n) => {
     state.imageList = n;
   },
-  setSelectedImage: (state, item) => {
-    state.selectedImage = item;
+  SET_SELECTED_IMAGE: (state, n) => {
+    state.selectedImage = n;
   },
   setXmlList: (state, item) => {
     state.setXmlList = item;
@@ -28,5 +37,6 @@ const mutations = {
 export default {
   state,
   getters,
+  actions,
   mutations,
 };
