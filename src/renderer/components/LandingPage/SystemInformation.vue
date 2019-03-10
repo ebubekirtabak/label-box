@@ -40,10 +40,17 @@
       folderGroups () {
         return this.$store.getters.getFolderGroups;
       },
+      imageList () {
+        return this.$store.getters.getImageList;
+      },
     },
     watch: {
       folderGroups (n, i) {
         console.log({ n, i });
+      },
+      imageList (n, i) {
+        console.log({ n, i });
+        console.log('image list updated');
       },
     },
     data () {
