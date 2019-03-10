@@ -17,7 +17,7 @@
   import { mapMutations, mapActions } from 'vuex';
   import FolderReaderService from '../services/FolderReaderService';
   import SystemInformation from './LandingPage/SystemInformation';
-
+  const mime = require('mime');
   const electron = require('electron').remote;
   const fs = require('fs');
   const { dialog } = electron;
@@ -28,6 +28,7 @@
     methods: {
       ...mapActions([
         'setFolderGroups',
+        'setImageList',
       ]),
       ...mapMutations([
         'SET_FOLDER_GROUPS',
@@ -52,6 +53,14 @@
       },
       updateFolderGroups (result) {
         this.setFolderGroups([result]);
+        const that = this;
+        Object.keys(result).forEach((key) => {
+          result[key].filter(item => item.type.indexOf('image') !== -1).forEach((item) => {
+            debugger;
+            that.imagesArray.push({ file: item.name, name: item.name, tagList: [], width: 0, height: 0, fullPath: key + item.name });
+          });
+        });
+        this.setImageList(this.imagesArray);
         this.$router.push('home');
       },
       folderSelector () {
@@ -62,7 +71,7 @@
             const folderGroups = {};
             result.forEach((path) => {
               folderGroups[path] = [];
-              folderGroups[path] = fs.readdirSync(path) || [];
+              folderGroups[path] = fs.readdirSync(path).map(file => ({ name: file, type: mime.getType(path + file) })) || [];
             });
 
             console.log(folderGroups);
@@ -86,7 +95,7 @@
     },
     data () {
       return {
-
+        imagesArray: [],
       };
     },
   };
