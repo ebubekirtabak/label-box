@@ -18,7 +18,10 @@ const actions = {
     commit('SET_IMAGE_LIST', n);
   },
   setSelectedImage: ({ commit }, n) => {
-    commit('SET_IMAGE_LIST', n);
+    commit('SET_SELECTED_IMAGE', n);
+  },
+  setXmlList: ({ commit }, n) => {
+    commit('SET_XML_LIST', n);
   },
 };
 
@@ -29,7 +32,7 @@ const mutations = {
   SET_SELECTED_IMAGE: (state, n) => {
     state.selectedImage = n;
   },
-  setXmlList: (state, item) => {
+  SET_XML_LIST: (state, item) => {
     state.setXmlList = item;
   },
 };
