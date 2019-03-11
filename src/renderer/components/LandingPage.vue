@@ -56,7 +56,14 @@
         const that = this;
         Object.keys(result).forEach((key) => {
           result[key].filter(item => item.type && item.type.indexOf('image') !== -1).forEach((item) => {
-            that.imagesArray.push({ file: item.name, name: item.name, tagList: [], width: 0, height: 0, fullPath: key + item.name });
+            that.imagesArray.push({
+              file: item.name,
+              name: item.name,
+              tagList: [],
+              width: 0,
+              height: 0,
+              fullPath: `${ key }/${ item.name }`,
+            });
           });
         });
         this.setImageList(this.imagesArray);
