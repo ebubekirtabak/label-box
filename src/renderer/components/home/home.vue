@@ -35,7 +35,7 @@
                         <div class="main-area__layer__list__image-item__footer">
                             {{ image.name }}
                         </div>
-                        <img :src="image.fileData" height="auto"/>
+                        <img :src="'file://' + image.fullPath" height="auto"/>
                     </div>
                 </div>
             </div>
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex';
   import NavBar from '../navbar/NavBar.vue';
   import AreaComponent from '../area/AreaComponent.vue';
 
@@ -54,8 +55,11 @@
       AreaComponent,
     },
     methods: {
+      ...mapActions([
+        'setSelectedImage',
+      ]),
       selectImage (image) {
-        this.$store.commit('setSelectedImage', image);
+        this.setSelectedImage(image);
       },
     },
     computed: {
