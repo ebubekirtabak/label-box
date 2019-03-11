@@ -1,7 +1,7 @@
 <template>
     <div class="main-area__image" @mousemove="onmouseMove($event)" >
         <div class="main-area__image__content" ref="area_content" v-on:click="onMouseClick($event)">
-            <img @load="loadedImage" v-show="isLoad" ref="main_image" :src="selectedImage.fileData"/>
+            <img @load="loadedImage" v-show="isLoad" ref="main_image" :src="'file://' + selectedImage.fullPath"/>
         </div>
         <div class="image-tag" v-on:click="onTagClick()"  v-on:dblclick="openEditMode(item)" data-id="item.id" v-for="item in selectedImage.tagList"
              v-bind:style="{ width: item.width + 'px', height: item.height + 'px', left: item.xmin + 'px', top: item.ymin + 'px' }" v-bind:key="item.id">
@@ -28,7 +28,7 @@
             <!-- tag borders -->
         </div>
         <!-- image tag dialog -->
-        <div class="dialog-container" v-show="selectedTag && selectedTag.mode == 'edit'">
+        <div class="dialog-container" v-show="selectedTag && selectedTag.mode === 'edit'">
             <div id="tag_dialog" class="tag-dialog" >
                 <div class="tag-dialog__body">
                     <div class="tag-dialog__body__form-content">
