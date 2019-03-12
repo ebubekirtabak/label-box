@@ -23,6 +23,9 @@ const actions = {
   setXmlList: ({ commit }, n) => {
     commit('SET_XML_LIST', n);
   },
+  pushTagToSelectedImage: ({ commit }, n) => {
+    commit('PUSH_TAG_TO_SELECTED_IMAGE', n);
+  },
 };
 
 const mutations = {
@@ -34,6 +37,9 @@ const mutations = {
   },
   SET_XML_LIST: (state, item) => {
     state.setXmlList = item;
+  },
+  PUSH_TAG_TO_SELECTED_IMAGE: (state, item) => {
+    state.selectedImage.tagList = [item, ...state.selectedImage.tagList];
   },
 };
 
