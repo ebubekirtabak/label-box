@@ -76,11 +76,7 @@
         },
         loadedImage () {
           const { width, height, naturalWidth, naturalHeight } = this.$refs.main_image;
-          this.isLoad = true;
-          this.imgResolutions.naturalWidth = naturalWidth;
-          this.imgResolutions.naturalHeight = naturalHeight;
-          this.imgResolutions.width = width;
-          this.imgResolutions.height = height;
+          this.imgResolutions = Object.assign(this.imgResolutions, { width, height, naturalWidth, naturalHeight });
           this.imgResolutions.widthRate = naturalWidth / width;
           this.imgResolutions.heightRate = naturalHeight / height;
         },
@@ -89,6 +85,7 @@
             this.isSelectedTag = true;
             this.selectedTag = tag;
             this.selectedTag.mode = 'edit';
+
             this.$refs.tag_name.focus();
             console.log('Mode edit');
           }, 100);
@@ -447,10 +444,7 @@
           const $this = this;
           setTimeout(() => {
             const { naturalWidth, naturalHeight, width, height } = $this.$refs.main_image;
-            $this.imgResolutions.naturalWidth = naturalWidth;
-            $this.imgResolutions.naturalHeight = naturalHeight;
-            $this.imgResolutions.width = width;
-            $this.imgResolutions.height = height;
+            $this.imgResolutions = Object.assign($this.imgResolutions, { naturalWidth, naturalHeight, width, height });
             $this.imgResolutions.widthRate = naturalWidth / width;
             $this.imgResolutions.heightRate = naturalHeight / height;
             $this.selectedImage.imgResolutions = this.imgResolutions;
