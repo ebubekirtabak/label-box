@@ -135,14 +135,14 @@
           event.preventDefault();
           this.isMouseDown = false;
         },
-        onmouseOver (evet, element) {
+        onmouseOver (event, element) {
           console.log('mouseOver +++++');
           if (element.mode !== 'create' && this.selectedTag.mode !== 'edit') {
             this.selectedTag = element;
             this.selectedTag.mode = 'over';
           }
         },
-        onMouseLeave (evetn, element) {
+        onMouseLeave (event, element) {
           console.log('mouseLeave ------');
           if (element.mode !== 'create' && this.selectedTag.mode !== 'edit') {
             this.selectedTag.mode = 'none';
