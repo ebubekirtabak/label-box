@@ -180,7 +180,7 @@
           this.updateSelectedTag(this.selectedImage.tagList[this.selectedImage.tagList.length - 1]);
         } else {
           console.log('---- draw finish -----');
-          this.selectedTag.mode = 'edit';
+          this.updateSelectedTag({ mode: 'edit' });
           this.openEditMode();
           /* this.isSelectedTag = false
               this.selectedTag = {} */
@@ -297,14 +297,14 @@
             case 'bl': // bottom left action
               this.onBottomResize(this.selectedBorder);
               break;
-            case 't':
+            case 't': {
+              const { height, ymin } = this.selectedTag;
               console.log(this.mouse.y - (this.selectedTag.height + this.selectedTag.ymin));
               console.log(`resize mode v^: ${ this.mouse.y }  ymin: ${ this.selectedTag.ymin }`);
-              move = (this.mouse.y - this.selectedTag.ymin);
+              move = (this.mouse.y - ymin);
               if (this.selectedTag.ymin < this.mouse.y) {
                 this.mouse.direction = 'v';
-                this.selectedTag.height -= move;
-                this.selectedTag.ymin += move;
+                this.updateSelectedTag({ height: (height - move), ymin: (ymin + move) });
               } else {
                 move = (this.selectedTag.ymin - this.mouse.y);
                 this.mouse.direction = '^';
@@ -314,6 +314,7 @@
               }
 
               break;
+            }
             case 'b':
               console.log((this.mouse.y - (this.selectedTag.height + this.selectedTag.ymin)));
               console.log(`resize mode v^: ${ this.mouse.y - this.selectedTag.ymin }`);
