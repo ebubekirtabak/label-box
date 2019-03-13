@@ -69,6 +69,7 @@
     methods: {
       ...mapActions([
         'pushTagToSelectedImage',
+        'updateSelectedTag',
       ]),
       onMount () {
 
@@ -176,7 +177,7 @@
             mode: 'create',
           };
           this.pushTagToSelectedImage(newTag);
-          this.selectedTag = this.selectedImage.tagList[this.selectedImage.tagList.length - 1];
+          this.updateSelectedTag(this.selectedImage.tagList[this.selectedImage.tagList.length - 1]);
         } else {
           console.log('---- draw finish -----');
           this.selectedTag.mode = 'edit';
@@ -220,9 +221,7 @@
             elX1 = this.mouse.startX;
           }
 
-          this.selectedTag.width = elWidth;
-          this.selectedTag.height = elHeight;
-          this.selectedTag.xmin = elX1;
+          this.updateSelectedTag({ width: elWidth, height: elHeight, xmin: elX1 });
         } else if (this.selectedTag && this.selectedTag.mode === 'over') {
           console.log('over mode --');
           if (this.mouse.oldX > 0 && this.isMouseDown) {
@@ -424,8 +423,6 @@
           this.mouse.y = (ev.clientY + document.body.scrollTop) - offsetTop;
         }
       },
-      onmouseClick () {
-      },
     },
     computed: {
       imageList () {
@@ -433,6 +430,9 @@
       },
       selectedImage () {
         return this.$store.getters.getSelectedImage;
+      },
+      selectedTag () {
+        return this.$store.getters.getSelectedTag;
       },
     },
     watch: {
@@ -488,7 +488,6 @@
         msg: 'Welcome to Your Vue.js App',
         isLoad: false,
         isSelectedTag: false,
-        selectedTag: {},
         isMouseDown: false,
         selectedBorder: '',
         imgResolutions: {
