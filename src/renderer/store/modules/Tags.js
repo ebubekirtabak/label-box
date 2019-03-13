@@ -5,12 +5,14 @@ const state = {
   imageList: [],
   xmlList: [],
   folderName: '',
+  selectedTag: {},
 };
 
 const getters = {
   getImageList: state => state.imageList,
   getSelectedImage: state => state.selectedImage,
   getXmlList: state => state.xmlList,
+  getSelectedTag: state => state.selectedTag,
 };
 
 const actions = {
@@ -26,6 +28,9 @@ const actions = {
   pushTagToSelectedImage: ({ commit }, n) => {
     commit('PUSH_TAG_TO_SELECTED_IMAGE', n);
   },
+  updateSelectedTag: ({ commit }, n) => {
+    commit('UPDATE_SELECTED_TAG', n);
+  },
 };
 
 const mutations = {
@@ -40,6 +45,9 @@ const mutations = {
   },
   PUSH_TAG_TO_SELECTED_IMAGE: (state, item) => {
     state.selectedImage.tagList = [item, ...state.selectedImage.tagList];
+  },
+  UPDATE_SELECTED_TAG: (state, item) => {
+    state.selectedTag = Object.assign(state.selectedTag, item);
   },
 };
 
