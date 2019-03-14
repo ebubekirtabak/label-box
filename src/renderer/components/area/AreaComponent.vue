@@ -70,13 +70,13 @@
       ...mapActions([
         'pushTagToSelectedImage',
         'updateSelectedTag',
-        'setSelectedTag'
+        'setSelectedTag',
       ]),
       onMount () {
 
       },
       dismissDialog () {
-        this.selectedTag = { label: '' };
+        this.setSelectedTag({ label: '' });
         this.isSelectedTag = false;
       },
       loadedImage () {
@@ -88,8 +88,7 @@
       openEditMode (tag) {
         setTimeout(() => {
           this.isSelectedTag = true;
-          this.selectedTag = tag;
-          this.selectedTag.mode = 'edit';
+          this.setSelectedTag({ ...tag, mode: 'edit' });
           this.$refs.tag_name.focus();
           console.log('Mode edit');
         }, 100);
@@ -109,15 +108,13 @@
         if (element) {
           this.isMouseDown = true;
           if (element.mode !== 'create' && element.mode !== 'edit') {
-            this.selectedTag = element;
-            this.selectedTag.mode = 'over';
+            this.setSelectedTag({ ...element, mode: 'over' });
           }
         }
       },
       onMouseOverBorder (event, item, border) {
         if (this.selectedTag.mode !== 'edit' && this.selectedTag.mode !== 'create') {
-          this.selectedTag = item;
-          this.selectedTag.mode = 'resize';
+          this.setSelectedTag({ ...item, mode: 'resize' });
           this.isSelectedTag = true;
           this.selectedBorder = border;
         }
@@ -377,11 +374,11 @@
             if ((xmin + this.selectedTag.width) < this.mouse.x) {
               move = this.mouse.x - (xmin + width);
               this.mouse.direction = '>';
-              this.selectedTag.width += move;
+              this.updateSelectedTag({ width: this.selectedTag.width + move });
             } else {
               move = (xmin + width) - this.mouse.x;
               this.mouse.direction = '<';
-              this.selectedTag.width -= move;
+              this.updateSelectedTag({ width: this.selectedTag.width - move });
             }
 
             break;
@@ -407,11 +404,11 @@
         if ((this.selectedTag.ymin + this.selectedTag.height) < this.mouse.y) {
           this.mouse.direction = 'v';
           move = (this.mouse.y - (this.selectedTag.ymin + this.selectedTag.height));
-          this.selectedTag.height += move;
+          this.updateSelectedTag({ height: this.selectedTag.height + move });
         } else {
           move = (this.mouse.y - (this.selectedTag.ymin + this.selectedTag.height));
           this.mouse.direction = '^';
-          this.selectedTag.height += move;
+          this.updateSelectedTag({ height: this.selectedTag.height + move });
         }
       },
       setMousePosition (e) {
