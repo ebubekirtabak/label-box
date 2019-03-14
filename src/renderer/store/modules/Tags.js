@@ -34,6 +34,9 @@ const actions = {
   updateSelectedTag: ({ commit }, n) => {
     commit('UPDATE_SELECTED_TAG', n);
   },
+  clearSelectedTag: ({ commit }) => {
+    commit('CLEAR_SELECTED_TAG');
+  },
 };
 
 const mutations = {
@@ -54,6 +57,9 @@ const mutations = {
   },
   UPDATE_SELECTED_TAG: (state, item) => {
     state.selectedTag = Object.assign(state.selectedTag, item);
+  },
+  CLEAR_SELECTED_TAG: (state) => {
+    state.selectedTag = {};
   },
 };
 
