@@ -70,6 +70,7 @@
       ...mapActions([
         'pushTagToSelectedImage',
         'updateSelectedTag',
+        'setSelectedTag'
       ]),
       onMount () {
 
