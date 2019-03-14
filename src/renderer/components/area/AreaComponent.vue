@@ -97,7 +97,7 @@
       onTagClick () {
         if (this.selectedTag.mode !== 'edit' && this.selectedTag.mode !== 'create') {
           console.log(`Mode none: ${ this.selectedTag.mode }`);
-          this.selectedTag({ mode: 'none', label: '' });
+          this.setSelectedTag({ mode: 'none', label: '' });
           this.isSelectedTag = false;
         } else if (this.selectedTag.mode === 'create') {
           this.updateSelectedTag({ mode: 'edit' });
@@ -246,8 +246,10 @@
               } else {
                 move = this.selectedTag.xmin - this.mouse.x;
                 this.mouse.direction = '<';
-                this.selectedTag.width += move;
-                this.selectedTag.xmin -= move;
+                this.updateSelectedTag({
+                  width: this.selectedTag.width + move,
+                  xmin: this.selectedTag.xmin - move,
+                });
               }
 
               if ((this.selectedTag.ymin) < this.mouse.y) {
