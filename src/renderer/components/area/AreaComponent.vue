@@ -341,8 +341,7 @@
                 this.updateSelectedTag({ width: width - move, xmin: xmin + move });
               } else {
                 this.mouse.direction = '<';
-                this.selectedTag.width -= move;
-                this.selectedTag.xmin += move;
+                this.updateSelectedTag({ width: width - move, xmin: xmin + move });
               }
 
               break;
