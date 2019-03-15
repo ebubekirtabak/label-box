@@ -332,13 +332,13 @@
 
               break;
             case 'l':
-              console.log((this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin)));
-              console.log(`resize mode<: ${ this.mouse.x - this.selectedTag.xmin }`);
-              move = (this.mouse.x - this.selectedTag.xmin);
-              if (this.selectedTag.xmin < this.mouse.x) {
+              const { xmin, width } = this.selectedTag;
+              console.log((this.mouse.x - (width + xmin)));
+              console.log(`resize mode<: ${ this.mouse.x - xmin }`);
+              move = (this.mouse.x - xmin);
+              if (xmin < this.mouse.x) {
                 this.mouse.direction = '>';
-                this.selectedTag.width -= move;
-                this.selectedTag.xmin += move;
+                this.updateSelectedTag({ width: width - move, xmin: xmin + move });
               } else {
                 this.mouse.direction = '<';
                 this.selectedTag.width -= move;
