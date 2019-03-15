@@ -373,14 +373,14 @@
           case 'br': // bottom right action
             move = (this.mouse.x - xmin);
 
-            if ((xmin + this.selectedTag.width) < this.mouse.x) {
+            if ((xmin + width) < this.mouse.x) {
               move = this.mouse.x - (xmin + width);
               this.mouse.direction = '>';
-              this.updateSelectedTag({ width: this.selectedTag.width + move });
+              this.updateSelectedTag({ width: width + move });
             } else {
               move = (xmin + width) - this.mouse.x;
               this.mouse.direction = '<';
-              this.updateSelectedTag({ width: this.selectedTag.width - move });
+              this.updateSelectedTag({ width: width - move });
             }
 
             break;
