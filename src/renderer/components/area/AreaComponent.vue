@@ -349,8 +349,9 @@
             case 'r':
               console.log((this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin)));
               console.log(`resize mode: ${ this.selectedTag.width } - ${ this.selectedTag.xmin } X: ${ this.mouse.x }`);
-              this.selectedTag.width +=
-                (this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin));
+              this.updateSelectedTag({ 
+                width: this.selectedTag.width + (this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin))
+              });
               break;
             default:
           }
