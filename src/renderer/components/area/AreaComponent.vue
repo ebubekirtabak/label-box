@@ -183,7 +183,7 @@
       },
       onmouseMove (event) {
         this.setMousePosition(event);
-        const { height, width, xmin, xmax, ymin } = this.selectedTag;
+        const { height, width, xmin, ymin } = this.selectedTag;
         if (this.isSelectedTag && this.selectedTag.mode === 'create') {
           const elWidth = Math.abs((this.mouse.x + this.imageContent.scrollLeft) - this.mouse.startX);
           let elHeight = Math.abs((this.mouse.y - this.mouse.startY) - this.imageContent.scrollTop);
@@ -267,14 +267,14 @@
               break;
             case 'tr':
               move = (this.mouse.x - this.selectedTag.xmin);
-              if ((this.selectedTag.xmin + this.selectedTag.width) < this.mouse.x) {
-                move = this.mouse.x - (this.selectedTag.xmin + this.selectedTag.width);
+              if ((xmin + width) < this.mouse.x) {
+                move = this.mouse.x - (xmin + width);
                 this.mouse.direction = '>';
-                this.selectedTag.width += move;
+                this.updateSelectedTag({ width: width + move });
               } else {
-                move = (this.selectedTag.xmin + this.selectedTag.width) - this.mouse.x;
+                move = (xmin + width) - this.mouse.x;
                 this.mouse.direction = '<';
-                this.selectedTag.width -= move;
+                this.updateSelectedTag({ width: width - move });
               }
 
               if (this.selectedTag.ymin < this.mouse.y) {
