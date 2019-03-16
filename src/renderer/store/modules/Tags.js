@@ -61,12 +61,9 @@ const mutations = {
     state.selectedImage.tagList = [item, ...state.selectedImage.tagList];
   },
   UPDATE_SELECTED_TAG: (state, item) => {
-    console.log('update tag: ');
-    console.log(item);
     state.selectedTag = Object.assign(state.selectedTag, item);
     const index = state.selectedImage.tagList.findIndex(tag => tag.id === state.selectedTag.id);
     state.selectedImage.tagList[index] = state.selectedTag;
-    console.log(state.selectedTag);
   },
   UPDATE_TAG_FROM_TAG_LIST: (state, item) => {
     const index = state.selectedImage.tagList.findIndex(tag => tag.id === item.id);
