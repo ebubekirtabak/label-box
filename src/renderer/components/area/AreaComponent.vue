@@ -135,8 +135,7 @@
       onmouseOver (evet, element) {
         console.log('mouseOver +++++');
         if (element.mode !== 'create' && this.selectedTag.mode !== 'edit') {
-          this.selectedTag = element;
-          this.selectedTag.mode = 'over';
+          this.setSelectedTag({ ...element, mode: 'over' });
         }
       },
       onMouseLeave (evetn, element) {
