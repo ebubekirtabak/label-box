@@ -141,8 +141,7 @@
       onMouseLeave (evetn, element) {
         console.log('mouseLeave ------');
         if (element.mode !== 'create' && this.selectedTag.mode !== 'edit') {
-          this.selectedTag.mode = 'none';
-          this.selectedTag = { label: '' };
+          this.setSelectedTag({ mode: 'none', label: '' });
         }
       },
       onMouseClick (event) {
@@ -184,6 +183,7 @@
       },
       onmouseMove (event) {
         this.setMousePosition(event);
+        const { height, width, xmin, xmax, ymin } = this.selectedTag;
         if (this.isSelectedTag && this.selectedTag.mode === 'create') {
           const elWidth = Math.abs((this.mouse.x + this.imageContent.scrollLeft) - this.mouse.startX);
           let elHeight = Math.abs((this.mouse.y - this.mouse.startY) - this.imageContent.scrollTop);
@@ -281,14 +281,12 @@
                 this.mouse.direction = 'v';
                 move = (this.mouse.y - this.selectedTag.ymin);
                 console.log(`Movevvvv: ${ move }`);
-                this.selectedTag.height -= move;
-                this.selectedTag.ymin += move;
+                this.updateSelectedTag({ height: height - move, ymin: ymin + move });
               } else {
                 move = (this.selectedTag.ymin - this.mouse.y);
                 this.mouse.direction = '^';
                 console.log(`Move ^^: ${ move }`);
-                this.selectedTag.height += move;
-                this.selectedTag.ymin -= move;
+                this.updateSelectedTag({ height: height + move, ymin: ymin - move });
               }
 
               break;
