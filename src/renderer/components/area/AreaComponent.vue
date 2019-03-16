@@ -331,7 +331,7 @@
               }
 
               break;
-            case 'l':
+            case 'l': {
               const { xmin, width } = this.selectedTag;
               console.log((this.mouse.x - (width + xmin)));
               console.log(`resize mode<: ${ this.mouse.x - xmin }`);
@@ -343,13 +343,13 @@
                 this.mouse.direction = '<';
                 this.updateSelectedTag({ width: width - move, xmin: xmin + move });
               }
-
+            }
               break;
             case 'r':
               console.log((this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin)));
               console.log(`resize mode: ${ this.selectedTag.width } - ${ this.selectedTag.xmin } X: ${ this.mouse.x }`);
-              this.updateSelectedTag({ 
-                width: this.selectedTag.width + (this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin))
+              this.updateSelectedTag({
+                width: this.selectedTag.width + (this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin)),
               });
               break;
             default:
