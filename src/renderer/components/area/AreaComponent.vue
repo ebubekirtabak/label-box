@@ -161,8 +161,9 @@
           this.mouse.x = (event.clientX + offsetLeft + scrollLeft);
           this.mouse.startY = (event.clientY - offsetTop) + scrollTop;
           this.mouse.startX = (event.clientX - offsetLeft) + scrollLeft;
+          const { length } = this.selectedImage.tagList
           const newTag = {
-            id: (this.selectedImage.tagList.length + 1),
+            id: (length + 1),
             label: '',
             class: '',
             xmin: this.mouse.startX,
@@ -172,7 +173,7 @@
             mode: 'create',
           };
           this.pushTagToSelectedImage(newTag);
-          this.updateSelectedTag(this.selectedImage.tagList[this.selectedImage.tagList.length - 1]);
+          this.updateSelectedTag(this.selectedImage.tagList[length - 1]);
         } else {
           console.log('---- draw finish -----');
           this.updateSelectedTag({ mode: 'edit' });
