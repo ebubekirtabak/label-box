@@ -161,7 +161,7 @@
           this.mouse.x = (event.clientX + offsetLeft + scrollLeft);
           this.mouse.startY = (event.clientY - offsetTop) + scrollTop;
           this.mouse.startX = (event.clientX - offsetLeft) + scrollLeft;
-          const { length } = this.selectedImage.tagList
+          const { length } = this.selectedImage.tagList;
           const newTag = {
             id: (length + 1),
             label: '',
