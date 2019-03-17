@@ -70,12 +70,14 @@
       ...mapActions([
         'pushTagToSelectedImage',
         'updateSelectedTag',
+        'setSelectedTag',
+        'clearSelectedTag',
       ]),
       onMount () {
 
       },
       dismissDialog () {
-        this.selectedTag = { label: '' };
+        this.setSelectedTag({ label: '' });
         this.isSelectedTag = false;
       },
       loadedImage () {
@@ -87,8 +89,7 @@
       openEditMode (tag) {
         setTimeout(() => {
           this.isSelectedTag = true;
-          this.selectedTag = tag;
-          this.selectedTag.mode = 'edit';
+          this.setSelectedTag({ ...tag, mode: 'edit' });
           this.$refs.tag_name.focus();
           console.log('Mode edit');
         }, 100);
@@ -96,11 +97,10 @@
       onTagClick () {
         if (this.selectedTag.mode !== 'edit' && this.selectedTag.mode !== 'create') {
           console.log(`Mode none: ${ this.selectedTag.mode }`);
-          this.selectedTag.mode = 'none';
+          this.setSelectedTag({ mode: 'none', label: '' });
           this.isSelectedTag = false;
-          this.selectedTag = { label: '' };
         } else if (this.selectedTag.mode === 'create') {
-          this.selectedTag.mode = 'edit';
+          this.updateSelectedTag({ mode: 'edit' });
           this.openEditMode(this.selectedTag);
         }
       },
@@ -108,15 +108,13 @@
         if (element) {
           this.isMouseDown = true;
           if (element.mode !== 'create' && element.mode !== 'edit') {
-            this.selectedTag = element;
-            this.selectedTag.mode = 'over';
+            this.setSelectedTag({ ...element, mode: 'over' });
           }
         }
       },
       onMouseOverBorder (event, item, border) {
         if (this.selectedTag.mode !== 'edit' && this.selectedTag.mode !== 'create') {
-          this.selectedTag = item;
-          this.selectedTag.mode = 'resize';
+          this.setSelectedTag({ ...item, mode: 'resize' });
           this.isSelectedTag = true;
           this.selectedBorder = border;
         }
@@ -125,9 +123,8 @@
         event.preventDefault();
         if (this.selectedTag.mode === 'resize') {
           setTimeout(() => {
-            this.selectedTag = 'none';
+            this.clearSelectedTag();
             this.isSelectedTag = false;
-            this.selectedTag = { label: '' };
           }, 500);
         }
       },
@@ -138,15 +135,13 @@
       onmouseOver (evet, element) {
         console.log('mouseOver +++++');
         if (element.mode !== 'create' && this.selectedTag.mode !== 'edit') {
-          this.selectedTag = element;
-          this.selectedTag.mode = 'over';
+          this.setSelectedTag({ ...element, mode: 'over' });
         }
       },
       onMouseLeave (evetn, element) {
         console.log('mouseLeave ------');
         if (element.mode !== 'create' && this.selectedTag.mode !== 'edit') {
-          this.selectedTag.mode = 'none';
-          this.selectedTag = { label: '' };
+          this.setSelectedTag({ mode: 'none', label: '' });
         }
       },
       onMouseClick (event) {
@@ -188,7 +183,8 @@
       },
       onmouseMove (event) {
         this.setMousePosition(event);
-        if (this.isSelectedTag && this.selectedTag.mode === 'create') {
+        const { height, width, xmin, ymin, mode } = this.selectedTag;
+        if (this.isSelectedTag && mode === 'create') {
           const elWidth = Math.abs((this.mouse.x + this.imageContent.scrollLeft) - this.mouse.startX);
           let elHeight = Math.abs((this.mouse.y - this.mouse.startY) - this.imageContent.scrollTop);
           if ((this.mouse.y + this.imageContent.scrollTop) > this.mouse.startY) {
@@ -206,9 +202,9 @@
             this.mouse.direction = '^';
             elHeight = Math.abs((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY);
             if ((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY < 0) {
-              this.selectedTag.ymin = ((this.mouse.y + this.imageContent.scrollTop));
+              this.updateSelectedTag({ ymin: (this.mouse.y + this.imageContent.scrollTop) });
             } else {
-              this.selectedTag.ymin = ((this.mouse.y + this.imageContent.scrollTop));
+              this.updateSelectedTag({ ymin: (this.mouse.y + this.imageContent.scrollTop) });
             }
           }
 
@@ -225,11 +221,11 @@
         } else if (this.selectedTag && this.selectedTag.mode === 'over') {
           console.log('over mode --');
           if (this.mouse.oldX > 0 && this.isMouseDown) {
-            this.selectedTag.xmin += (this.mouse.x - this.mouse.oldX);
+            this.updateSelectedTag({ xmin: this.selectedTag.xmin + (this.mouse.x - this.mouse.oldX) });
           }
 
           if (this.mouse.oldY > 0 && this.isMouseDown) {
-            this.selectedTag.ymin += (this.mouse.y - this.mouse.oldY);
+            this.updateSelectedTag({ ymin: this.selectedTag.ymin + (this.mouse.y - this.mouse.oldY) });
           }
 
           this.mouse.oldX = this.mouse.x;
@@ -242,21 +238,24 @@
               if (this.mouse.x > this.selectedTag.xmin) {
                 move = this.mouse.x - this.selectedTag.xmin;
                 this.mouse.direction = '>';
-                this.selectedTag.width -= move;
-                this.selectedTag.xmin += move;
+                this.updateSelectedTag({
+                  width: this.selectedTag.width - move,
+                  xmin: this.selectedTag.xmin + move,
+                });
               } else {
                 move = this.selectedTag.xmin - this.mouse.x;
                 this.mouse.direction = '<';
-                this.selectedTag.width += move;
-                this.selectedTag.xmin -= move;
+                this.updateSelectedTag({
+                  width: this.selectedTag.width + move,
+                  xmin: this.selectedTag.xmin - move,
+                });
               }
 
               if ((this.selectedTag.ymin) < this.mouse.y) {
                 this.mouse.direction = 'v';
                 move = (this.mouse.y - this.selectedTag.ymin);
                 console.log(`Movevvvv: ${ move }`);
-                this.selectedTag.height -= move;
-                this.selectedTag.ymin += move;
+                this.updateSelectedTag({ height: this.selectedTag.height - move, ymin: this.selectedTag.ymin + move });
               } else {
                 move = (this.selectedTag.ymin - this.mouse.y);
                 this.mouse.direction = '^';
@@ -268,28 +267,26 @@
               break;
             case 'tr':
               move = (this.mouse.x - this.selectedTag.xmin);
-              if ((this.selectedTag.xmin + this.selectedTag.width) < this.mouse.x) {
-                move = this.mouse.x - (this.selectedTag.xmin + this.selectedTag.width);
+              if ((xmin + width) < this.mouse.x) {
+                move = this.mouse.x - (xmin + width);
                 this.mouse.direction = '>';
-                this.selectedTag.width += move;
+                this.updateSelectedTag({ width: width + move });
               } else {
-                move = (this.selectedTag.xmin + this.selectedTag.width) - this.mouse.x;
+                move = (xmin + width) - this.mouse.x;
                 this.mouse.direction = '<';
-                this.selectedTag.width -= move;
+                this.updateSelectedTag({ width: width - move });
               }
 
               if (this.selectedTag.ymin < this.mouse.y) {
                 this.mouse.direction = 'v';
                 move = (this.mouse.y - this.selectedTag.ymin);
                 console.log(`Movevvvv: ${ move }`);
-                this.selectedTag.height -= move;
-                this.selectedTag.ymin += move;
+                this.updateSelectedTag({ height: height - move, ymin: ymin + move });
               } else {
                 move = (this.selectedTag.ymin - this.mouse.y);
                 this.mouse.direction = '^';
                 console.log(`Move ^^: ${ move }`);
-                this.selectedTag.height += move;
-                this.selectedTag.ymin -= move;
+                this.updateSelectedTag({ height: height + move, ymin: ymin - move });
               }
 
               break;
@@ -308,9 +305,8 @@
               } else {
                 move = (this.selectedTag.ymin - this.mouse.y);
                 this.mouse.direction = '^';
-                this.selectedTag.height += move;
                 console.log(`move v: ${ move }--- ymin: ${ this.selectedTag.ymin }`);
-                this.selectedTag.ymin -= move;
+                this.updateSelectedTag({ height: height + move, ymin: ymin - move });
               }
 
               break;
@@ -322,35 +318,33 @@
               console.log(`move v: ${ move }`);
               if (this.selectedTag.ymin < this.mouse.y) {
                 this.mouse.direction = 'v';
-                this.selectedTag.height += move;
-                // this.selectedTag.ymin += move
+                this.updateSelectedTag({ height: height + move });
               } else {
                 this.mouse.direction = '^';
-                this.selectedTag.height -= move;
-                this.selectedTag.ymin += move;
+                this.updateSelectedTag({ height: height - move, ymin: ymin + move });
               }
 
               break;
-            case 'l':
-              console.log((this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin)));
-              console.log(`resize mode<: ${ this.mouse.x - this.selectedTag.xmin }`);
-              move = (this.mouse.x - this.selectedTag.xmin);
-              if (this.selectedTag.xmin < this.mouse.x) {
+            case 'l': {
+              const { xmin, width } = this.selectedTag;
+              console.log((this.mouse.x - (width + xmin)));
+              console.log(`resize mode<: ${ this.mouse.x - xmin }`);
+              move = (this.mouse.x - xmin);
+              if (xmin < this.mouse.x) {
                 this.mouse.direction = '>';
-                this.selectedTag.width -= move;
-                this.selectedTag.xmin += move;
+                this.updateSelectedTag({ width: width - move, xmin: xmin + move });
               } else {
                 this.mouse.direction = '<';
-                this.selectedTag.width -= move;
-                this.selectedTag.xmin += move;
+                this.updateSelectedTag({ width: width - move, xmin: xmin + move });
               }
-
+            }
               break;
             case 'r':
               console.log((this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin)));
               console.log(`resize mode: ${ this.selectedTag.width } - ${ this.selectedTag.xmin } X: ${ this.mouse.x }`);
-              this.selectedTag.width +=
-                (this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin));
+              this.updateSelectedTag({
+                width: this.selectedTag.width + (this.mouse.x - (this.selectedTag.width + this.selectedTag.xmin)),
+              });
               break;
             default:
           }
@@ -373,14 +367,14 @@
           case 'br': // bottom right action
             move = (this.mouse.x - xmin);
 
-            if ((xmin + this.selectedTag.width) < this.mouse.x) {
+            if ((xmin + width) < this.mouse.x) {
               move = this.mouse.x - (xmin + width);
               this.mouse.direction = '>';
-              this.selectedTag.width += move;
+              this.updateSelectedTag({ width: width + move });
             } else {
               move = (xmin + width) - this.mouse.x;
               this.mouse.direction = '<';
-              this.selectedTag.width -= move;
+              this.updateSelectedTag({ width: width - move });
             }
 
             break;
@@ -390,12 +384,10 @@
             if (xmin < this.mouse.x) {
               console.log('<v');
               this.mouse.direction = '>';
-              this.selectedTag.width -= move;
-              this.selectedTag.xmin += move;
+              this.updateSelectedTag({ width: width - move, xmin: xmin + move });
             } else {
               this.mouse.direction = '<';
-              this.selectedTag.width -= move;
-              this.selectedTag.xmin += move;
+              this.updateSelectedTag({ width: width - move, xmin: xmin + move });
             }
 
             break;
@@ -406,11 +398,11 @@
         if ((this.selectedTag.ymin + this.selectedTag.height) < this.mouse.y) {
           this.mouse.direction = 'v';
           move = (this.mouse.y - (this.selectedTag.ymin + this.selectedTag.height));
-          this.selectedTag.height += move;
+          this.updateSelectedTag({ height: this.selectedTag.height + move });
         } else {
           move = (this.mouse.y - (this.selectedTag.ymin + this.selectedTag.height));
           this.mouse.direction = '^';
-          this.selectedTag.height += move;
+          this.updateSelectedTag({ height: this.selectedTag.height + move });
         }
       },
       setMousePosition (e) {

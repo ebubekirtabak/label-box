@@ -22,6 +22,9 @@ const actions = {
   setSelectedImage: ({ commit }, n) => {
     commit('SET_SELECTED_IMAGE', n);
   },
+  setSelectedTag: ({ commit }, n) => {
+    commit('SET_SELECTED_TAG', n);
+  },
   setXmlList: ({ commit }, n) => {
     commit('SET_XML_LIST', n);
   },
@@ -30,6 +33,12 @@ const actions = {
   },
   updateSelectedTag: ({ commit }, n) => {
     commit('UPDATE_SELECTED_TAG', n);
+  },
+  updateTagFromTagList: ({ commit }, n) => {
+    commit('UPDATE_TAG_FROM_TAG_LIST', n);
+  },
+  clearSelectedTag: ({ commit }) => {
+    commit('CLEAR_SELECTED_TAG');
   },
 };
 
@@ -40,6 +49,11 @@ const mutations = {
   SET_SELECTED_IMAGE: (state, n) => {
     state.selectedImage = n;
   },
+  SET_SELECTED_TAG: (state, n) => {
+    state.selectedTag = n;
+    const index = state.selectedImage.tagList.findIndex(tag => tag.id === state.selectedTag.id);
+    state.selectedImage.tagList[index] = state.selectedTag;
+  },
   SET_XML_LIST: (state, item) => {
     state.setXmlList = item;
   },
@@ -48,6 +62,15 @@ const mutations = {
   },
   UPDATE_SELECTED_TAG: (state, item) => {
     state.selectedTag = Object.assign(state.selectedTag, item);
+    const index = state.selectedImage.tagList.findIndex(tag => tag.id === state.selectedTag.id);
+    state.selectedImage.tagList[index] = state.selectedTag;
+  },
+  UPDATE_TAG_FROM_TAG_LIST: (state, item) => {
+    const index = state.selectedImage.tagList.findIndex(tag => tag.id === item.id);
+    state.selectedImage.tagList[index] = item;
+  },
+  CLEAR_SELECTED_TAG: (state) => {
+    state.selectedTag = {};
   },
 };
 
