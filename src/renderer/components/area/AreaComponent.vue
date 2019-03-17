@@ -305,9 +305,8 @@
               } else {
                 move = (this.selectedTag.ymin - this.mouse.y);
                 this.mouse.direction = '^';
-                this.selectedTag.height += move;
                 console.log(`move v: ${ move }--- ymin: ${ this.selectedTag.ymin }`);
-                this.selectedTag.ymin -= move;
+                this.updateSelectedTag({ height: height + move, ymin: ymin - move });
               }
 
               break;
@@ -319,12 +318,10 @@
               console.log(`move v: ${ move }`);
               if (this.selectedTag.ymin < this.mouse.y) {
                 this.mouse.direction = 'v';
-                this.selectedTag.height += move;
-                // this.selectedTag.ymin += move
+                this.updateSelectedTag({ height: height + move });
               } else {
                 this.mouse.direction = '^';
-                this.selectedTag.height -= move;
-                this.selectedTag.ymin += move;
+                this.updateSelectedTag({ height: height - move, ymin: ymin + move });
               }
 
               break;
