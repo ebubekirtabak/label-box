@@ -183,8 +183,8 @@
       },
       onmouseMove (event) {
         this.setMousePosition(event);
-        const { height, width, xmin, ymin } = this.selectedTag;
-        if (this.isSelectedTag && this.selectedTag.mode === 'create') {
+        const { height, width, xmin, ymin, mode } = this.selectedTag;
+        if (this.isSelectedTag && mode === 'create') {
           const elWidth = Math.abs((this.mouse.x + this.imageContent.scrollLeft) - this.mouse.startX);
           let elHeight = Math.abs((this.mouse.y - this.mouse.startY) - this.imageContent.scrollTop);
           if ((this.mouse.y + this.imageContent.scrollTop) > this.mouse.startY) {
@@ -202,9 +202,9 @@
             this.mouse.direction = '^';
             elHeight = Math.abs((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY);
             if ((this.mouse.y + this.imageContent.scrollTop) - this.mouse.startY < 0) {
-              this.selectedTag.ymin = ((this.mouse.y + this.imageContent.scrollTop));
+              this.updateSelectedTag({ ymin: (this.mouse.y + this.imageContent.scrollTop) });
             } else {
-              this.selectedTag.ymin = ((this.mouse.y + this.imageContent.scrollTop));
+              this.updateSelectedTag({ ymin: (this.mouse.y + this.imageContent.scrollTop) });
             }
           }
 
