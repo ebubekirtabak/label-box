@@ -16,7 +16,6 @@
 <script>
   import { mapMutations, mapActions } from 'vuex';
   import FolderReaderService from '../services/FolderReaderService';
-  import SystemInformation from './LandingPage/SystemInformation';
   const mime = require('mime');
   const electron = require('electron').remote;
   const fs = require('fs');
@@ -24,7 +23,7 @@
 
   export default {
     name: 'landing-page',
-    components: { SystemInformation },
+    components: { },
     methods: {
       ...mapActions([
         'setFolderGroups',
