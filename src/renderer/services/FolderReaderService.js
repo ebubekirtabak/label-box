@@ -7,7 +7,9 @@ export default class ForderReaderService {
     folders.forEach((path) => {
       folderGroups[path] = [];
       folderGroups[path] = fs.readdirSync(path) || [];
-      folderGroups[path] = folderGroups[path].map(file => ({ name: file, type: mime.getType(path + file), fullPath: path + file }));
+      folderGroups[path] = folderGroups[path].map(file => ({
+        name: file, type: mime.getType(path + file), fullPath: `${ path }/${ file }`,
+      }));
     });
     console.log(folderGroups);
     return folderGroups;
@@ -21,14 +23,16 @@ export default class ForderReaderService {
   readAllTextFiles (files) {
     const fileTexts = {};
     files.filter(file => file.type && file.type.indexOf('text') !== -1).forEach((file) => {
-      fileTexts[file.path] = this.readTextFile(file);
+      this.readTextFile(file).then((data) => {
+        fileTexts[file.fullPath] = data;
+      });
     });
     console.log(fileTexts);
   }
 
   readTextFile (file) {
     return new Promise((resolve, error) => {
-      fs.readFile(file.path || file, (err, data) => {
+      fs.readFile(file.fullPath || file, (err, data) => {
         if (err) {
           error(err);
         }
