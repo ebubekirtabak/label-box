@@ -73,7 +73,8 @@
             const folderReader = new FolderReaderService();
 
             const folderGroups = folderReader.getAllFiles(result);
-
+            const textFiles = folderReader.readAllTextFiles(folderGroups[result]);
+            console.log(textFiles);
             console.log(folderGroups);
             resolve(folderGroups);
           });
