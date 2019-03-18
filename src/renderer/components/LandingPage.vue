@@ -16,7 +16,6 @@
 <script>
   import { mapMutations, mapActions } from 'vuex';
   import FolderReaderService from '../services/FolderReaderService';
-  const mime = require('mime');
   const electron = require('electron').remote;
   const fs = require('fs');
   const { dialog } = electron;
@@ -72,12 +71,8 @@
         return new Promise((resolve) => {
           dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }, (result) => {
             const folderReader = new FolderReaderService();
-            folderReader.getAllFiles(result);
-            const folderGroups = {};
-            result.forEach((path) => {
-              folderGroups[path] = [];
-              folderGroups[path] = fs.readdirSync(path).map(file => ({ name: file, type: mime.getType(path + file) })) || [];
-            });
+
+            const folderGroups = folderReader.getAllFiles(result);
 
             console.log(folderGroups);
             resolve(folderGroups);
