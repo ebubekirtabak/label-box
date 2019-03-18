@@ -21,12 +21,12 @@ export default class ForderReaderService {
   readAllTextFiles (files) {
     const fileTexts = {};
     files.filter(file => file.type.indexOf('text') !== -1).forEach((file) => {
-      fileTexts[file.path] = this.readFile(file);
+      fileTexts[file.path] = this.readTextFile(file);
     });
     console.log(fileTexts);
   }
 
-  readFile (file) {
+  readTextFile (file) {
     return new Promise((resolve, error) => {
       fs.readFile(file.path || file, (err, data) => {
         if (err) {
