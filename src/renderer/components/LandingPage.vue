@@ -7,7 +7,6 @@
           Welcome to Label Box App
         </span>
         <button @click="openPaths()"> Open Workspace </button>
-        <system-information></system-information>
       </div>
     </main>
   </div>
