@@ -22,7 +22,7 @@ export default class ForderReaderService {
 
   readAllTextFiles (files) {
     const fileTexts = {};
-    files.filter(file => file.type && file.type.indexOf('text') !== -1).forEach((file) => {
+    files.filter(file => file.type && file.type.indexOf('application/xml') !== -1).forEach((file) => {
       this.readTextFile(file).then((data) => {
         fileTexts[file.fullPath] = data;
       });
