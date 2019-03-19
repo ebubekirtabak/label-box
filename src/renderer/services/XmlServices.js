@@ -1,15 +1,10 @@
 
+import FolderReaderService from './FolderReaderService';
+
 export default class XmlServices {
   readXml (file) {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      const onload = function () {
-        resolve(reader.result);
-      };
-
-      reader.onload = onload;
-      reader.readAsText(file);
-    });
+    const reader = new FolderReaderService();
+    return reader.readTextFile(file);
   }
 
   xmlToJson (xmlData) {
