@@ -261,8 +261,7 @@
                 move = (this.selectedTag.ymin - this.mouse.y);
                 this.mouse.direction = '^';
                 console.log(`Move ^^: ${ move }`);
-                this.selectedTag.height += move;
-                this.selectedTag.ymin -= move;
+                this.updateSelectedTag({ height: this.selectedTag.height + move, ymin: this.selectedTag.ymin - move });
               }
 
               break;
