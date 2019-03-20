@@ -42,6 +42,16 @@ export default class ForderReaderService {
     });
   }
 
+  removeFile (file) {
+    fs.unlink(file.path || file, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    
+    });
+  }
+
   writeTextFile (file) {
     if (file.name) {
       const { name, data } = file;
