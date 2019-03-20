@@ -9,6 +9,11 @@ import KeyListenerService from './services/KeyListenerService';
 
 export default {
   name: 'App',
+  methods: {
+    constructor () {
+      const keyListenerService = new KeyListenerService();
+    }
+  },
   data () {
     return {
       taglist: [],
