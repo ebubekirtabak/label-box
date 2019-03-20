@@ -41,4 +41,13 @@ export default class ForderReaderService {
       });
     });
   }
+
+  writeTextFile (file) {
+    if (file.name) {
+      const { name, data } = file;
+      fs.writeFile(name, data, (err) => {
+        if (err) throw err;
+      });
+    }
+  }
 }
