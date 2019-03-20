@@ -46,9 +46,8 @@ export default class ForderReaderService {
     fs.unlink(file.path || file, (err) => {
       if (err) {
         console.error(err);
-        return;
+        return false;
       }
-    
     });
   }
 
