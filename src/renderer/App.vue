@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import KeyListenerService from './services/KeyListenerService';
 
 export default {
   name: 'App',
