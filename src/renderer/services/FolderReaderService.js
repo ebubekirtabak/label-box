@@ -48,6 +48,7 @@ export default class ForderReaderService {
         console.error(err);
         return false;
       }
+      return true;
     });
   }
 
