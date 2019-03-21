@@ -5,14 +5,12 @@
 </template>
 
 <script>
-import KeyListenerService from './services/KeyListenerService';
 
 export default {
   name: 'App',
+  created () {
+  },
   methods: {
-    constructor () {
-      const keyListenerService = new KeyListenerService();
-    }
   },
   data () {
     return {
