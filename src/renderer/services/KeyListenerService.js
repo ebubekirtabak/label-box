@@ -1,13 +1,11 @@
-const ioHook = require('iohook');
 
 export default class KeyListenerService {
-  constructor () {
+  startHook () {
+    const ioHook = require('iohook');
+    debugger;
     ioHook.on('keypress', (event) => {
       console.log(event);
     });
-  }
-
-  startHook () {
     ioHook.start();
   }
 }
