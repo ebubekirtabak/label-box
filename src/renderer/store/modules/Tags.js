@@ -16,6 +16,9 @@ const getters = {
 };
 
 const actions = {
+  initTagList: ({ commit }, n) => {
+    commit('INIT_TAG_LIST', n);
+  },
   setImageList: ({ commit }, n) => {
     commit('SET_IMAGE_LIST', n);
   },
@@ -43,6 +46,11 @@ const actions = {
 };
 
 const mutations = {
+  INIT_TAG_LİST: (state, n) => {
+    const index = state.selectedImage.tagList.findIndex(tag => tag.id === n.id);
+    debugger;
+    state.selectedImage.tagList[index] = state.selectedTag;
+  },
   SET_IMAGE_LIST: (state, n) => {
     state.imageList = n;
   },
