@@ -1,5 +1,11 @@
 const fs = require('fs');
 const mime = require('mime');
+let store;
+if (process.browser) {
+  window.onNuxtReady(({ $store }) => {
+    store = $store;
+  });
+}
 
 export default class FolderReaderService {
   getAllFiles (folders) {
@@ -25,9 +31,10 @@ export default class FolderReaderService {
     files.filter(file => file.type && file.type.indexOf('application/xml') !== -1).forEach((file) => {
       this.readTextFile(file).then((data) => {
         fileTexts[file.fullPath] = data;
+        store.dispatch('initTagList', data);
       });
     });
-    console.log(fileTexts);
+    return fileTexts;
   }
 
   readTextFile (file) {
