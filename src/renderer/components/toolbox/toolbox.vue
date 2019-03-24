@@ -17,6 +17,12 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    .toolbox {
+        max-width: 128px;
+        max-height: 580px;
+        &__list {
 
+        }
+    }
 </style>
