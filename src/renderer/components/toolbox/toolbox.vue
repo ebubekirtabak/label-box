@@ -10,8 +10,7 @@
     name: 'ToolBox',
     data () {
       return {
-        imagesArray: [],
-        xmlFiles: [],
+        selectedTool: {},
       };
     },
     methods: {
