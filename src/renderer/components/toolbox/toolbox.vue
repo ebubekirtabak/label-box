@@ -14,7 +14,11 @@
         xmlFiles: [],
       };
     },
-    methods: {},
+    methods: {
+      ...mapActions([
+        'setSelectedTool',
+      ]),
+    },
   };
 </script>
 
@@ -26,7 +30,7 @@
         width: 100%;
         padding: 10px 5px;
         &__item {
-          
+
         }
       }
   }
