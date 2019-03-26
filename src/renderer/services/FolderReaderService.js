@@ -1,11 +1,6 @@
+import store from '../store';
 const fs = require('fs');
 const mime = require('mime');
-let store;
-if (process.browser) {
-  window.onNuxtReady(({ $store }) => {
-    store = $store;
-  });
-}
 
 export default class FolderReaderService {
   getAllFiles (folders) {
