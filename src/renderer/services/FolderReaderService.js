@@ -26,7 +26,7 @@ export default class FolderReaderService {
     files.filter(file => file.type && file.type.indexOf('application/xml') !== -1).forEach((file) => {
       this.readTextFile(file).then((data) => {
         fileTexts[file.fullPath] = data;
-        store.dispatch('initTagList', data);
+        store.dispatch('INIT_TAG_LIST', data);
       });
     });
     return fileTexts;
