@@ -24,6 +24,9 @@
       ...mapActions([
         'setSelectedTool',
       ]),
+      onSelectTool() {
+        this.selectedTool();
+      },
     },
   };
 </script>
