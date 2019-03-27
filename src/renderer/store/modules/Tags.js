@@ -47,8 +47,8 @@ const actions = {
 
 const mutations = {
   INIT_TAG_LİST: (state, n) => {
-    const index = state.selectedImage.tagList.findIndex(tag => tag.id === n.id);
     debugger;
+    const index = state.selectedImage.tagList.findIndex(tag => tag.id === n.id);
     state.selectedImage.tagList[index] = state.selectedTag;
   },
   SET_IMAGE_LIST: (state, n) => {
