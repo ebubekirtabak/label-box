@@ -4,11 +4,9 @@ export default class ExportServices {
   exportList (imagesArray) {
     const zip = new JSZip();
 
-    imagesArray.forEach((img) => {
-      if (img.name.lastIndexOf('.') !== -1) {
-        const xmlName = `${ img.name.substring(0, img.name.lastIndexOf('.')) }.xml`;
-        zip.file(xmlName, this.createXmlData(img.tagList, img));
-      }
+    imagesArray.filters(img => img.name.lastIndexOf('.') !== -1).forEach((img) => {
+      const xmlName = `${ img.name.substring(0, img.name.lastIndexOf('.')) }.xml`;
+      zip.file(xmlName, this.createXmlData(img.tagList, img));
     });
 
     zip.generateAsync({ type: 'blob' }).then((content) => {
