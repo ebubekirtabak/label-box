@@ -478,7 +478,9 @@
       imageList (n, i) {
         console.log({ n, i });
       },
-      
+      selectedTool ({ n, i }) {
+        console.log({ n, i });
+      },
     },
     data () {
       return {
