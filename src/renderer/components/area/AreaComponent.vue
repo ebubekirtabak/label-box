@@ -427,6 +427,9 @@
       selectedTag () {
         return this.$store.getters.getSelectedTag;
       },
+      selectedTool () {
+        return this.store.getters.getSelectedTool;
+      },
     },
     watch: {
       selectedImage (n, i) {
@@ -475,6 +478,7 @@
       imageList (n, i) {
         console.log({ n, i });
       },
+      
     },
     data () {
       return {
