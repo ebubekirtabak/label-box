@@ -484,7 +484,7 @@
     },
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App',
+        msg: 'LabelBox',
         isLoad: false,
         isSelectedTag: false,
         isMouseDown: false,
