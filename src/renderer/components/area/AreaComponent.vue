@@ -1,6 +1,7 @@
 <template>
     <div class="main-area__image" @mousemove="onmouseMove($event)" >
         <div class="main-area__image__content" ref="area_content" v-on:click="onMouseClick($event)">
+            <MouseGridComponent></MouseGridComponent>
             <img @load="onLoadImage" v-show="isLoad" ref="main_image" :src="'file://' + selectedImage.fullPath"/>
         </div>
         <div class="image-tag" v-on:click="onTagClick()"  v-on:dblclick="openEditMode(item)" data-id="item.id" v-for="item in selectedImage.tagList"
@@ -62,9 +63,11 @@
 
 <script>
   import { mapActions } from 'vuex';
+  import MouseGridComponent from '../mousegrid/MouseGridComponent';
   export default {
     name: 'AreaComponent',
     components: {
+      MouseGridComponent,
     },
     methods: {
       ...mapActions([
