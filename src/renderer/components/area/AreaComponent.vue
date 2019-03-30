@@ -1,7 +1,7 @@
 <template>
     <div class="main-area__image" @mousemove="onmouseMove($event)" >
         <div class="main-area__image__content" ref="area_content" v-on:click="onMouseClick($event)">
-            <img @load="loadedImage" v-show="isLoad" ref="main_image" :src="'file://' + selectedImage.fullPath"/>
+            <img @load="onLoadImage" v-show="isLoad" ref="main_image" :src="'file://' + selectedImage.fullPath"/>
         </div>
         <div class="image-tag" v-on:click="onTagClick()"  v-on:dblclick="openEditMode(item)" data-id="item.id" v-for="item in selectedImage.tagList"
              v-bind:style="{ width: item.width + 'px', height: item.height + 'px', left: item.xmin + 'px', top: item.ymin + 'px' }" v-bind:key="item.id">
@@ -80,7 +80,7 @@
         this.setSelectedTag({ label: '' });
         this.isSelectedTag = false;
       },
-      loadedImage () {
+      onLoadImage () {
         const { width, height, naturalWidth, naturalHeight } = this.$refs.main_image;
         this.imgResolutions = Object.assign(this.imgResolutions, { width, height, naturalWidth, naturalHeight });
         this.imgResolutions.widthRate = naturalWidth / width;
