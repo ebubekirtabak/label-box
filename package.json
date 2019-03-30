@@ -2,7 +2,7 @@
   "name": "label-box",
   "version": "0.0.1",
   "author": "Ebubekir Tabak <ebubekir.tabak@yahoo.com>",
-  "description": "An electron-vue project",
+  "description": "Image Annotation Tool",
   "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
