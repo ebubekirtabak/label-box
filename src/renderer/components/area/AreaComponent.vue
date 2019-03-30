@@ -75,6 +75,7 @@
         'updateSelectedTag',
         'setSelectedTag',
         'clearSelectedTag',
+        'setMouse',
       ]),
       onMount () {
 
@@ -418,6 +419,7 @@
           this.mouse.x = (ev.clientX + document.body.scrollLeft) - offsetLeft;
           this.mouse.y = (ev.clientY + document.body.scrollTop) - offsetTop;
         }
+        this.setMouse(this.mouse);
       },
     },
     computed: {
