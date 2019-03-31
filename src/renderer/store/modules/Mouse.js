@@ -8,10 +8,12 @@ const state = {
     startY: 0,
     direction: '+',
   },
+  mouseHoldOnArea: false,
 };
 
 const getters = {
   getMouse: state => state.mouse,
+  getMouseHoldOnArea: state => state.mouseHoldOnArea,
 };
 
 const actions = {
