@@ -1,5 +1,5 @@
 <template>
-    <div class="mouse-grid">
+    <div class="mouse-grid" v-show="isShow">
         <div class="mouse-grid__vertical-line" v-bind:style="{ left: this.mouse.x + 'px' }"></div>
         <div class="mouse-grid__horizontal-line" v-bind:style="{ top: this.mouse.y + 'px' }"></div>
     </div>
@@ -10,6 +10,7 @@
     name: 'MouseGridComponent',
     data () {
       return {
+        isShow: false,
       };
     },
     methods: {
