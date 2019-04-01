@@ -20,11 +20,17 @@ const actions = {
   setMouse: ({ commit }, n) => {
     commit('SET_MOUSE', n);
   },
+  setMouseHoldOnArea: ({ commit }, n) => {
+    commit('SET_MOUSE_ON_HOLD_AREA', n);
+  },
 };
 
 const mutations = {
   SET_MOUSE: (state, n) => {
     state.mouse = n;
+  },
+  SET_MOUSE_ON_HOLD_AREA: (state, n) => {
+    state.setMouseHoldOnArea = n;
   },
 };
 
