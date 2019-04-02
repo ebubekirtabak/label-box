@@ -1,6 +1,7 @@
 const state = {
   selectedTool: {},
   toolState: {},
+  mouseState: {},
 };
 
 const getters = {
