@@ -7,6 +7,7 @@ const state = {
 const getters = {
   getSelectedTool: state => state.selectedTool,
   getToolState: state => state.toolState,
+  getMouseState: state => state.mouseState,
 };
 
 const actions = {
@@ -16,6 +17,9 @@ const actions = {
   setToolState: ({ commit }, n) => {
     commit('SET_TOOL_STATE', n);
   },
+  setMouseState: ({ commit }, n) => {
+    commit('SET_MOUSE_STATE', n);
+  },
 };
 
 const mutations = {
@@ -24,6 +28,9 @@ const mutations = {
   },
   SET_TOOL_STATE: (state, n) => {
     state.toolState = n;
+  },
+  SET_MOUSE_STATE: (state, n) => {
+    state.mouseState = n;
   },
 };
 
