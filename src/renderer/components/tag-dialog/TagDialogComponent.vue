@@ -1,7 +1,7 @@
 <template>
 
 </template>
-<div class="dialog-container" v-show="selectedTag && selectedTag.mode === 'edit'">
+<div class="dialog-container" v-show="isShow">
     <div id="tag_dialog" class="tag-dialog" >
         <div class="tag-dialog__body">
             <div class="tag-dialog__body__form-content">
