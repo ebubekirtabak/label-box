@@ -29,28 +29,7 @@
             <!-- tag borders -->
         </div>
         <!-- image tag dialog -->
-        <div class="dialog-container" v-show="selectedTag && selectedTag.mode === 'edit'">
-          <div id="tag_dialog" class="tag-dialog" >
-            <div class="tag-dialog__body">
-              <div class="tag-dialog__body__form-content">
-                <label>Object Name</label>
-                <input ref="tag_name" id="imput_tag_name" type="text" v-model="selectedTag.label"  autofocus v-on:keyup.13="dismissDialog()"/>
-              </div>
-              <div class="tag-dialog__body__form-content">
-                <label>Class Name</label>
-                <input id="imput_class_name" type="text"  v-model="selectedTag.class"  v-on:keyup.13="dismissDialog()"/>
-              </div>
-            </div>
-            <div class="tag-dialog__footer">
-              <a class="tag-dialog__footer-btn left flex-item" v-on:click="dismissDialog()">
-                <i class="fas fa-check"></i> ok
-              </a>
-              <a class="tag-dialog__footer-btn right flex-item">
-                <i class="fas fa-times"></i> remove
-              </a>
-            </div>
-          </div>
-        </div>
+        <TagDialogComponent></TagDialogComponent>
         <!-- image tag dialog -->
         <div class="main-area__image__info">
             <span>Mode: {{ selectedTag.mode }}</span>
@@ -64,10 +43,13 @@
 <script>
   import { mapActions } from 'vuex';
   import MouseGridComponent from '../mousegrid/MouseGridComponent';
+  import TagDialogComponent from '../tag-dialog/TagDialogComponent';
+
   export default {
     name: 'AreaComponent',
     components: {
       MouseGridComponent,
+      TagDialogComponent,
     },
     methods: {
       ...mapActions([
