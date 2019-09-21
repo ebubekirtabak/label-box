@@ -60,12 +60,12 @@
             if (data !== '400') {
               console.log(`reading :${ files[i].name }`);
               xmlList.push(files[i]);
-              const imageIndex = this.getImageFromName(data.annotation.filename._text);
+              const imageIndex = this.imagesArray.findIndex(image => image.name === data.annotation.filename._text);
               const width = parseInt(data.annotation.size.width._text, 10);
               const height = parseInt(data.annotation.size.height._text, 10);
-              this.imagesArray[imageIndex].width = width;
-              this.imagesArray[imageIndex].height = height;
               if (imageIndex !== -1 && data.annotation.object && data.annotation.object.length && data.annotation.object.length > 0) {
+                this.imagesArray[imageIndex].width = width;
+                this.imagesArray[imageIndex].height = height;
                 data.annotation.object.forEach((item) => {
                   const tagId = (this.imagesArray[imageIndex].tagList.length + 1);
                   const bndbox = item.bndbox;
@@ -87,6 +87,8 @@
                   this.$store.commit('setImageList', this.imagesArray);
                 });
               } else if (imageIndex !== -1 && data.annotation.object && data.annotation.object.name) {
+                this.imagesArray[imageIndex].width = width;
+                this.imagesArray[imageIndex].height = height;
                 const tagId = (this.imagesArray[imageIndex].tagList.length + 1);
                 const item = data.annotation.object;
                 const bndbox = item.bndbox;
@@ -128,17 +130,6 @@
 
           reader.readAsDataURL(file);
         });
-      },
-      getImageFromName (name) {
-        let index = -1;
-        for (let i = 0; i < this.imagesArray.length; i += 1) {
-          if (this.imagesArray[i].name === name) {
-            index = i;
-            return index;
-          }
-        }
-
-        return index;
       },
       exportList () {
         const exportServices = new ExportServices();
